@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %} {% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1>{% block nadpis %} {% endblock %}</h1>
+        </header>
+        <nav>
+            <ul>
+                {% for ID, Text in databaze.items() %}
+                    <li><a href="/{{ id }}">{{ nazev }}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+        <main>
+            {% block main %} {% endblock %}
+        </main>
+        <footer>
+            Copyright Matěj Kaška
+        </footer>
+    </body>
+</html>

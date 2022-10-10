@@ -1,0 +1,39 @@
+{% extends "sablona.html" %}
+
+{% block main %}
+<article>
+    <header>
+        <h2>Databáze</h2>
+    </header>
+</article>
+<section id="Text">
+    <table>
+    <thead>
+        <th>ID</th><th>Text</th>
+    </thead>
+    {% for ID, text in databaze.items() %}
+        <tr>
+            <td>{{ ID }}</td><td>{{ text }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+</section>
+<br>
+<br>
+<section id="Odeslat text">
+    <form action="" method="post">
+        <fieldset>
+            <label>Název: </label>
+            <input type="text" name="nazev" placeholder="Zadej název" required>
+            <br>
+            <label>Nadpis: </label>
+            <input type="text" name="nadpis" placeholder="Zadej nadpis" required>
+            <br>
+            <label>Text: </label>
+            <input type="text" name="text" placeholder="Zadej text" required>
+            <br>
+            <button type="submit">Odešli text</button>
+        </fieldset>
+    </form>
+</section>
+{% endblock %}
