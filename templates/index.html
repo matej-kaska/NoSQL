@@ -11,9 +11,9 @@
     <thead>
         <th>ID</th><th>Text</th>
     </thead>
-    {% for ID, text in databaze.items() %}
+    {% for ID, nazev, nadpis, text in databaze %}
         <tr>
-            <td>{{ ID }}</td><td>{{ text }}</td>
+            <td>{{ ID }}</td><td>{{ nadpis }}</td>
         </tr>
     {% endfor %}
     </table>

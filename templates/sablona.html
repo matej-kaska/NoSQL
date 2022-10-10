@@ -10,7 +10,7 @@
         </header>
         <nav>
             <ul>
-                {% for ID, Text in databaze.items() %}
+                {% for ID, nazev, nadpis, text in databaze %}
                     <li><a href="/{{ id }}">{{ nazev }}</a></li>
                 {% endfor %}
             </ul>
@@ -19,7 +19,7 @@
             {% block main %} {% endblock %}
         </main>
         <footer>
-            Copyright Matěj Kaška
+            Copyright Divočákos
         </footer>
     </body>
 </html>
