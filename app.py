@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import csv
 from os import listdir
-path = "soubory/"
+path = "NoSQL/NoSQL/soubory/"
 endOfFile = "divocak"
 separator = ","
 
