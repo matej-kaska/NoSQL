@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request
-import csv
 from os import listdir
 path = "NoSQL/NoSQL/soubory/"
 endOfFile = "divocak"
@@ -71,4 +70,4 @@ def varName(id):
 
 if __name__ == "__main__":
     loadDB()
-    flaskAPR.run(debug=True)
+    flaskAPR.run(debug=True, host="0.0.0.0")
