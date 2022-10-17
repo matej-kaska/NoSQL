@@ -2,28 +2,30 @@
 
 {% block main %}
 <article>
-    <header class="header bg-primary text-center">
+    <header class="header text-center" style="background-color: #333333; color: white;">
         <h1>Databáze</h1>
     </header>
 </article>
 
-<section id="Text">
-    <table class="table table-hover table-bordered border-dark table-striped">
-    <thead>
-        <th>ID</th>
-        <th>Text</th>
-    </thead>
-    {% for ID, nazev, nadpis, text in databaze %}
+<section class="section bg-secondary" id="Text">
+    <table class="table table-hover table-bordered border-dark table-striped"
+        style="background-color: rgb(82, 82, 82);">
+        <thead>
+            <th>ID</th>
+            <th>Text</th>
+        </thead>
+        {% for ID, nazev, nadpis, text in databaze %}
         <tr>
-            <td>{{ ID }}</td><td>{{ nadpis }}</td>
+            <td>{{ ID }}</td>
+            <td>{{ nadpis }}</td>
         </tr>
-    {% endfor %}
+        {% endfor %}
     </table>
 </section>
 
 <br>
 <br>
-<section class="section" id="Odeslat text">
+<section class="section" id="Odeslat text" style="background-color: #333333; color: white;">
     <form action="" method="post">
         <fieldset>
 
@@ -38,14 +40,14 @@
                 <input type="text" class="form-control" name="nadpis" placeholder="Zadej nadpis" required>
             </div>
             <br>
-            
+
             <div class="input-group mb-0">
                 <span class="input-group-text" id="basic-addon1">Text</span>
                 <input type="text" class="form-control" name="text" placeholder="Zadej text" required>
             </div>
             <br>
 
-            <button class="btn bg-primary" type="submit">Potvrdit</button>
+            <button class="btn bg-danger" type="submit" style="margin-bottom: 25px">Potvrdit</button>
         </fieldset>
     </form>
 </section>
