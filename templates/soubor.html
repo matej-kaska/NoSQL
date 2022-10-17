@@ -1,0 +1,31 @@
+{% extends "sablona.html" %}
+
+{% block main %}
+<article>
+    <header class="dropdown-header">
+        <h2>Právě prohlížíš soubor ...</h2>
+    </header>
+</article>
+
+<section id="Text">
+    <table>
+    <thead>
+        <th>ID</th><th>Text</th>
+    </thead>
+    {% for ID, nazev, nadpis, text in databaze %}
+        <tr>
+            <td>{{ ID }}</td><td>{{ nadpis }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+</section>
+<br>
+<br>
+<section id="Text">
+    {% for ID, nazev, nadpis, text in newDB %}
+    <h1>{{ nadpis }}</h1>
+    <h2>{{ nazev }}</h2>
+    <div>{{ text }}</div>
+    {% endfor %}
+</section>
+{% endblock %}

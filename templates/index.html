@@ -2,37 +2,51 @@
 
 {% block main %}
 <article>
-    <header>
-        <h2>Databáze</h2>
+    <header class="header bg-primary text-center">
+        <h1>Databáze</h1>
     </header>
 </article>
+
 <section id="Text">
-    <table>
-    <thead>
-        <th>ID</th><th>Text</th>
-    </thead>
-    {% for ID, text in databaze.items() %}
+    <table class="table table-hover table-bordered border-dark table-striped">
+        <thead>
+            <th>ID</th>
+            <th>Text</th>
+        </thead>
+        {% for ID, nazev, nadpis, text in databaze %}
         <tr>
-            <td>{{ ID }}</td><td>{{ text }}</td>
+            <td>{{ ID }}</td>
+            <td>{{ nadpis }}</td>
         </tr>
-    {% endfor %}
+        {% endfor %}
     </table>
 </section>
+
 <br>
 <br>
-<section id="Odeslat text">
+<section class="section" id="Odeslat text">
     <form action="" method="post">
         <fieldset>
-            <label>Název: </label>
-            <input type="text" name="nazev" placeholder="Zadej název" required>
+
+            <div class="input-group mb-0">
+                <span class="input-group-text" id="basic-addon1">Název</span>
+                <input type="text" class="form-control" name="nazev" placeholder="Zadej název" required>
+            </div>
             <br>
-            <label>Nadpis: </label>
-            <input type="text" name="nadpis" placeholder="Zadej nadpis" required>
+
+            <div class="input-group mb-0">
+                <span class="input-group-text" id="basic-addon1">Nadpis</span>
+                <input type="text" class="form-control" name="nadpis" placeholder="Zadej nadpis" required>
+            </div>
             <br>
-            <label>Text: </label>
-            <input type="text" name="text" placeholder="Zadej text" required>
+
+            <div class="input-group mb-0">
+                <span class="input-group-text" id="basic-addon1">Text</span>
+                <input type="text" class="form-control" name="text" placeholder="Zadej text" required>
+            </div>
             <br>
-            <button type="submit">Odešli text</button>
+
+            <button class="btn bg-primary" type="submit">Potvrdit</button>
         </fieldset>
     </form>
 </section>

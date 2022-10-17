@@ -1,9 +1,6 @@
 from flask import Flask, render_template, request
-<<<<<<< Updated upstream
-=======
-import csv
 from os import listdir
-path = "NoSQL/NoSQL_seminarka/soubory/"
+path = "soubory/"
 endOfFile = "divocak"
 separator = ","
 
@@ -47,12 +44,7 @@ def addToDB(nazev, nadpis, text):
     writeLineInFile(path + str(id) + "." + endOfFile, nazev + separator + nadpis + separator + text)
     db.append([id, nazev, nadpis, text])
 
->>>>>>> Stashed changes
 
-db = {
-    1 : "Poseidon Vltavy",
-    2 : "Tyler Durden"
-}
 
 flaskAPR = Flask(__name__)
 
@@ -61,10 +53,21 @@ def index():
     if request.method == "GET":
         return render_template("index.html", databaze=db)
     elif request.method == "POST":
+        nazev = request.form["nazev"]
+        nadpis = request.form["nadpis"]
         text = request.form["text"]
-        db[len(db) + 1] = text
+        addToDB(nazev, nadpis, text)
         return render_template("index.html", oznameni="Uspesne zaslano", databaze=db)
     return render_template("index.html", databaze=db)
 
+@flaskAPR.route("/<id>")
+def varName(id):
+    localDB = []
+    for value in db:
+        if value[0] == id:
+            localDB.append(value)
+    return render_template("soubor.html", databaze=db, newDB=localDB)
+
 if __name__ == "__main__":
-    flaskAPR.run(debug=True)
+    loadDB()
+    flaskAPR.run(debug=True, host="0.0.0.0")
