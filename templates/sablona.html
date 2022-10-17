@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html>
 
-    <head class="head bg-black">
-        <title>{% block title %} Divočákos {% endblock %}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">  
-        <link href="/NoSQL/NoSQL/static/css/style.css" rel="stylesheet" media="all">
-    </head>
+<head class="head bg-black">
+    <title>{% block title %} Divočákos {% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="static/css/style.css" rel="stylesheet" media="all">
+</head>
 
-    <body class="body bg-black">
-        <header>
-            <h1>{% block nadpis %} {% endblock %}</h1>
-            <a href="http://127.0.0.1:5000/">
-                <button class="btn bg-primary float-right">Home</button>
-            </a>
-        </header>
+<body class="body bg-black">
+    <header>
+        <h1>{% block nadpis %} {% endblock %}</h1>
+        <a href="/">
+            <button class="btn bg-primary float-right">Home</button>
+        </a>
+    </header>
 
-        <nav>
-            <ul>
-                {% for ID, nazev, nadpis, text in databaze %}
-                    <li><a href="/{{ ID }}">{{ nazev }}</a></li>
-                {% endfor %}
-            </ul>
-        </nav>
+    <nav>
+        <ul>
+            {% for ID, nazev, nadpis, text in databaze %}
+            <li><a href="/{{ ID }}">{{ nazev }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
 
-        <main>
-            {% block main %} {% endblock %}
-        </main>
+    <main>
+        {% block main %} {% endblock %}
+    </main>
 
-        <footer class="footer fixed-bottom text-center bg-primary">
-            &copy; 2022 by Divočákos
-        </footer>
+    <footer class="footer fixed-bottom text-center bg-primary">
+        &copy; 2022 by Divočákos
+    </footer>
 
-    </body>
+</body>
+
 </html>
