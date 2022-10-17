@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request
 from os import listdir
-path = "NoSQL/NoSQL/soubory/"
+path = "soubory/"
 endOfFile = "divocak"
 separator = ","
 
 db = []
+
 
 def getLineInFile(path):
     file = open(path, "r")
@@ -12,10 +13,12 @@ def getLineInFile(path):
     file.close()
     return line
 
+
 def writeLineInFile(path, text):
     file = open(path, "w")
     file.write(text)
     file.close()
+
 
 def loadDB():
     for localPath in listdir(path):
@@ -26,6 +29,7 @@ def loadDB():
             for kek in getLineInFile(path + localPath).split(separator):
                 meziDB.append(kek)
             db.append(meziDB)
+
 
 def getLastID():
     listOfFiles = listdir(path)
@@ -39,14 +43,16 @@ def getLastID():
                 higestNumber = newNumber
     return higestNumber
 
+
 def addToDB(nazev, nadpis, text):
     id = getLastID() + 1
-    writeLineInFile(path + str(id) + "." + endOfFile, nazev + separator + nadpis + separator + text)
+    writeLineInFile(path + str(id) + "." + endOfFile, nazev +
+                    separator + nadpis + separator + text)
     db.append([id, nazev, nadpis, text])
 
 
-
 flaskAPR = Flask(__name__)
+
 
 @flaskAPR.route("/", methods=["GET", "POST"])
 def index():
@@ -60,6 +66,7 @@ def index():
         return render_template("index.html", oznameni="Uspesne zaslano", databaze=db)
     return render_template("index.html", databaze=db)
 
+
 @flaskAPR.route("/<id>")
 def varName(id):
     localDB = []
@@ -67,6 +74,7 @@ def varName(id):
         if value[0] == id:
             localDB.append(value)
     return render_template("soubor.html", databaze=db, newDB=localDB)
+
 
 if __name__ == "__main__":
     loadDB()
