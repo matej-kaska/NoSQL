@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+import sqlalchemy
 from os import listdir
 path = "soubory/"
 endOfFile = "divocak"
@@ -57,8 +58,12 @@ flaskAPR = Flask(__name__)
 flaskAPR.app_context().push()
 flaskAPR.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123@localhost/login'
 postgre.init_app(flaskAPR)
-print(postgre.session.execute("SELECT username FROM login"))
 
+class Login(postgre.Model):
+    username = postgre.Column(postgre.String, primary_key=True, nullable=False)
+    password = postgre.Column(postgre.String, nullable=False)
+
+postgre.create_all()
 
 @flaskAPR.route("/", methods=["GET", "POST"])
 def index():
@@ -71,9 +76,30 @@ def index():
             text = request.form["text"]
             addToDB(nazev, nadpis, text)
             return render_template("index.html", oznameni="Uspesne zaslano", databaze=db)
-        else:
-            print("kek")
-    return render_template("index.html", databaze=db)
+        elif request.form["btn"] == "register":
+            username = request.form["username"]
+            if username not in postgre.session.execute(postgre.select(Login.username)).scalars():
+                register = Login(
+                    username = request.form["username"],
+                    password = request.form["password"]
+                )
+                postgre.session.add(register)
+                postgre.session.commit()
+                return render_template("index.html", oznameni="Uspesne zaregistrovano", databaze=db)
+            else:
+                print("Uživatel s tímto jménem již existuje")
+                return render_template("index.html", oznameni="Neuspesne zaregistrovano", databaze=db)
+        elif request.form["btn"] == "login":
+            username = request.form["username"]
+            password = request.form["password"]
+            if username in postgre.session.execute(postgre.select(Login.username)).scalars():
+                if password == postgre.session.execute(postgre.select(Login.password).where(Login.username == username)).scalar():
+                    print("Úspěšně přihlášeno")
+                else:
+                    print("Špatné heslo")
+            else:
+                print("Uživatel s tímto jménem neexistuje")
+            return render_template("index.html", oznameni="Uspesne prihlaseno", databaze=db)
 
 
 @flaskAPR.route("/<id>")
@@ -83,10 +109,6 @@ def varName(id):
         if value[0] == id:
             localDB.append(value)
     return render_template("soubor.html", databaze=db, newDB=localDB)
-
-class Login(postgre.Model):
-    username = postgre.Column(postgre.String, primary_key=True)
-    password = postgre.Column(postgre.String)
 
 
 if __name__ == "__main__":
