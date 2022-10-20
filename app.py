@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from flask_sqlalchemy import SQLAlchemy
 from os import listdir
 path = "soubory/"
 endOfFile = "divocak"
@@ -51,7 +52,12 @@ def addToDB(nazev, nadpis, text):
     db.append([id, nazev, nadpis, text])
 
 
+postgre = SQLAlchemy()
 flaskAPR = Flask(__name__)
+flaskAPR.app_context().push()
+flaskAPR.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123@localhost/login'
+postgre.init_app(flaskAPR)
+print(postgre.session.execute("SELECT username FROM login"))
 
 
 @flaskAPR.route("/", methods=["GET", "POST"])
@@ -59,11 +65,14 @@ def index():
     if request.method == "GET":
         return render_template("index.html", databaze=db)
     elif request.method == "POST":
-        nazev = request.form["nazev"]
-        nadpis = request.form["nadpis"]
-        text = request.form["text"]
-        addToDB(nazev, nadpis, text)
-        return render_template("index.html", oznameni="Uspesne zaslano", databaze=db)
+        if request.form["btn"] == "send":
+            nazev = request.form["nazev"]
+            nadpis = request.form["nadpis"]
+            text = request.form["text"]
+            addToDB(nazev, nadpis, text)
+            return render_template("index.html", oznameni="Uspesne zaslano", databaze=db)
+        else:
+            print("kek")
     return render_template("index.html", databaze=db)
 
 
@@ -74,6 +83,10 @@ def varName(id):
         if value[0] == id:
             localDB.append(value)
     return render_template("soubor.html", databaze=db, newDB=localDB)
+
+class Login(postgre.Model):
+    username = postgre.Column(postgre.String, primary_key=True)
+    password = postgre.Column(postgre.String)
 
 
 if __name__ == "__main__":
