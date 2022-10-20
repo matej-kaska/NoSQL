@@ -53,17 +53,17 @@ def addToDB(nazev, nadpis, text):
     db.append([id, nazev, nadpis, text])
 
 
-postgre = SQLAlchemy()
+mariadb = SQLAlchemy()
 flaskAPR = Flask(__name__)
 flaskAPR.app_context().push()
-flaskAPR.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123@localhost/login'
-postgre.init_app(flaskAPR)
+flaskAPR.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb+mariadbconnector://nsql:123456@82.142.110.169:3306/nsql'
+mariadb.init_app(flaskAPR)
 
-class Login(postgre.Model):
-    username = postgre.Column(postgre.String, primary_key=True, nullable=False)
-    password = postgre.Column(postgre.String, nullable=False)
+class Login(mariadb.Model):
+    username = mariadb.Column(mariadb.String, primary_key=True, nullable=False)
+    password = mariadb.Column(mariadb.String, nullable=False)
 
-postgre.create_all()
+mariadb.create_all()
 
 @flaskAPR.route("/", methods=["GET", "POST"])
 def index():
@@ -78,13 +78,13 @@ def index():
             return render_template("index.html", oznameni="Uspesne zaslano", databaze=db)
         elif request.form["btn"] == "register":
             username = request.form["username"]
-            if username not in postgre.session.execute(postgre.select(Login.username)).scalars():
+            if username not in mariadb.session.execute(mariadb.select(Login.username)).scalars():
                 register = Login(
                     username = request.form["username"],
                     password = request.form["password"]
                 )
-                postgre.session.add(register)
-                postgre.session.commit()
+                mariadb.session.add(register)
+                mariadb.session.commit()
                 return render_template("index.html", oznameni="Uspesne zaregistrovano", databaze=db)
             else:
                 print("Uživatel s tímto jménem již existuje")
@@ -92,8 +92,8 @@ def index():
         elif request.form["btn"] == "login":
             username = request.form["username"]
             password = request.form["password"]
-            if username in postgre.session.execute(postgre.select(Login.username)).scalars():
-                if password == postgre.session.execute(postgre.select(Login.password).where(Login.username == username)).scalar():
+            if username in mariadb.session.execute(mariadb.select(Login.username)).scalars():
+                if password == mariadb.session.execute(mariadb.select(Login.password).where(Login.username == username)).scalar():
                     print("Úspěšně přihlášeno")
                 else:
                     print("Špatné heslo")
