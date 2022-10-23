@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy
 from os import listdir
@@ -56,6 +56,7 @@ def addToDB(nazev, nadpis, text):
 mariadb = SQLAlchemy()
 flaskAPR = Flask(__name__)
 flaskAPR.app_context().push()
+flaskAPR.secret_key = "a0X98Bs5Njv%^aJNO43M8rE!E3yAomIM"
 flaskAPR.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb+mariadbconnector://nsql:123456@82.142.110.169:3306/nsql'
 mariadb.init_app(flaskAPR)
 
@@ -68,14 +69,14 @@ mariadb.create_all()
 @flaskAPR.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "GET":
-        return render_template("index.html", databaze=db)
+        return render_template("index.html", databaze=db, session=session)
     elif request.method == "POST":
         if request.form["btn"] == "send":
             nazev = request.form["nazev"]
             nadpis = request.form["nadpis"]
             text = request.form["text"]
             addToDB(nazev, nadpis, text)
-            return render_template("index.html", oznameni="Uspesne zaslano", databaze=db)
+            return render_template("index.html", oznameni="Uspesne zaslano", databaze=db, session=session)
         elif request.form["btn"] == "register":
             username = request.form["username"]
             if username not in mariadb.session.execute(mariadb.select(Login.username)).scalars():
@@ -85,21 +86,26 @@ def index():
                 )
                 mariadb.session.add(register)
                 mariadb.session.commit()
-                return render_template("index.html", oznameni="Uspesne zaregistrovano", databaze=db)
+                session["username"] = request.form["username"]
+                return render_template("index.html", oznameni="Uspesne zaregistrovano", databaze=db, session=session)
             else:
                 print("Uživatel s tímto jménem již existuje")
-                return render_template("index.html", oznameni="Neuspesne zaregistrovano", databaze=db)
+                return render_template("index.html", oznameni="Neuspesne zaregistrovano", databaze=db, session=session)
         elif request.form["btn"] == "login":
             username = request.form["username"]
             password = request.form["password"]
             if username in mariadb.session.execute(mariadb.select(Login.username)).scalars():
                 if password == mariadb.session.execute(mariadb.select(Login.password).where(Login.username == username)).scalar():
+                    session["username"] = request.form["username"]
                     print("Úspěšně přihlášeno")
                 else:
                     print("Špatné heslo")
             else:
                 print("Uživatel s tímto jménem neexistuje")
-            return render_template("index.html", oznameni="Uspesne prihlaseno", databaze=db)
+            return render_template("index.html", oznameni="Uspesne prihlaseno", databaze=db, session=session)
+        elif request.form["btn"] == "logout":
+            session.pop("username")
+            return render_template("index.html", oznameni="Uspesne prihlaseno", databaze=db, session=session)
 
 
 @flaskAPR.route("/<id>")
@@ -108,7 +114,7 @@ def varName(id):
     for value in db:
         if value[0] == id:
             localDB.append(value)
-    return render_template("soubor.html", databaze=db, newDB=localDB)
+    return render_template("soubor.html", databaze=db, newDB=localDB, session=session)
 
 
 if __name__ == "__main__":
