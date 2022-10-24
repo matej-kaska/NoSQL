@@ -11,12 +11,13 @@
     />
     <link href="static/css/style.css" rel="stylesheet" media="all" />
   </head>
+  
 
   <nav class="navbar navbar-expand-m navbar-dark bg-dark bg-hover">
     <a class="btn bg-danger" href="/">Home</a>
 
     <button
-      class="navbar-toggler bg-primary bg-hover"
+      class="mx-auto navbar-toggler bg-primary bg-hover"
       type="button"
       data-toggle="collapse"
       data-target="#navbarNavAltMarkup"
@@ -27,11 +28,11 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     
-    {% if session["username"] %}
+    {% if session["username"] %}     
       <form method="post">
-        <button type="submit" name="btn" value="logout" class="btn btn-primary">Odhlásit se</button>
+        <label for="loginusername" class="text-primary" style="padding-right: 15px">Jste přihlášen jako {{ session["username"] }}!</label>
+        <button type="submit" name="btn" value="logout" class="btn btn-outline-primary">Odhlásit se</button>
       </form>
-      <h1>Welcome {{ session['username'] }}!</h1>
     {% else %}
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -57,14 +58,6 @@
               placeholder="Heslo"
               required>
             </div>
-  
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="dropdownCheck2">
-              <label class="form-check-label" style="padding-bottom: 15px;"for="dropdownCheck2">
-                Zapamatovat
-              </label>
-            </div>
-  
             <button type="submit" name="btn" value="login" class="btn btn-primary">Přihlásit se</button>
             <button type="submit" name="btn" value="register" class="btn btn-secondary">Zaregistrovat se</button>
           </form>
@@ -82,6 +75,35 @@
       </nav>
     </div>
   </nav>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        {% if message == "loginsucces" %}
+        <div class="alert alert-success" role="alert">
+          Úspěšně přihlášen!
+        </div>
+        {% elif message == "loginerror" %}
+        <div class="alert alert-danger" role="alert">
+          Špatné jméno nebo heslo!
+        </div>
+        {% elif message == "regsucces" %}
+        <div class="alert alert-succes" role="alert">
+          Úspěšně zaregistrován!
+        </div>
+        {% elif message == "regerror" %}
+        <div class="alert alert-danger" role="alert">
+          Uživatel s tímto jménem již existuje!
+        </div>
+        {% elif message == "logout" %}
+        <div class="alert alert-primary" role="alert">
+          Úspěšně odhlášen!
+        </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  
 
   <body class="body" style="background-color: #333333">
     <header>

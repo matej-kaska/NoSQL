@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, session
+from wsgiref.util import request_uri
+from flask import Flask, render_template, request, session, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy
 from os import listdir
@@ -66,6 +67,45 @@ class Login(mariadb.Model):
 
 mariadb.create_all()
 
+@flaskAPR.route('/', defaults={'path': ''}, methods=["POST"])
+@flaskAPR.route('/<path:path>', methods=["POST"])
+def catchall(path):
+    print(path)
+    if request.method == "POST":
+        if request.form["btn"] == "register":
+            username = request.form["username"]
+            if username not in mariadb.session.execute(mariadb.select(Login.username)).scalars():
+                register = Login(
+                    username = request.form["username"],
+                    password = request.form["password"]
+                )
+                mariadb.session.add(register)
+                mariadb.session.commit()
+                session["username"] = request.form["username"]
+                flash("regsucces")
+                return redirect(request.referrer)  
+            else:
+                flash("regerror")
+                return redirect(request.referrer)  
+        elif request.form["btn"] == "login":
+            username = request.form["username"]
+            password = request.form["password"]
+            if username in mariadb.session.execute(mariadb.select(Login.username)).scalars():
+                if password == mariadb.session.execute(mariadb.select(Login.password).where(Login.username == username)).scalar():
+                    session["username"] = request.form["username"]
+                    flash("loginsucces")
+                    return redirect(request.referrer)  
+                else:
+                    flash("loginerror")
+                    return redirect(request.referrer)    
+            else:
+                flash("loginerror")
+                return redirect(request.referrer)    
+        elif request.form["btn"] == "logout":
+            session.pop("username")
+            flash("logout")
+            return redirect(request.referrer)
+
 @flaskAPR.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "GET":
@@ -77,35 +117,6 @@ def index():
             text = request.form["text"]
             addToDB(nazev, nadpis, text)
             return render_template("index.html", oznameni="Uspesne zaslano", databaze=db, session=session)
-        elif request.form["btn"] == "register":
-            username = request.form["username"]
-            if username not in mariadb.session.execute(mariadb.select(Login.username)).scalars():
-                register = Login(
-                    username = request.form["username"],
-                    password = request.form["password"]
-                )
-                mariadb.session.add(register)
-                mariadb.session.commit()
-                session["username"] = request.form["username"]
-                return render_template("index.html", oznameni="Uspesne zaregistrovano", databaze=db, session=session)
-            else:
-                print("Uživatel s tímto jménem již existuje")
-                return render_template("index.html", oznameni="Neuspesne zaregistrovano", databaze=db, session=session)
-        elif request.form["btn"] == "login":
-            username = request.form["username"]
-            password = request.form["password"]
-            if username in mariadb.session.execute(mariadb.select(Login.username)).scalars():
-                if password == mariadb.session.execute(mariadb.select(Login.password).where(Login.username == username)).scalar():
-                    session["username"] = request.form["username"]
-                    print("Úspěšně přihlášeno")
-                else:
-                    print("Špatné heslo")
-            else:
-                print("Uživatel s tímto jménem neexistuje")
-            return render_template("index.html", oznameni="Uspesne prihlaseno", databaze=db, session=session)
-        elif request.form["btn"] == "logout":
-            session.pop("username")
-            return render_template("index.html", oznameni="Uspesne prihlaseno", databaze=db, session=session)
 
 
 @flaskAPR.route("/<id>")
