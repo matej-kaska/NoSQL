@@ -10,9 +10,8 @@
       crossorigin="anonymous"
     />
     <link href="static/css/style.css" rel="stylesheet" media="all" />
-    <script src="scripts/scripts.js" type = "text/javascript"></script>
+    <script src="scripts/scripts.js" type="text/javascript"></script>
   </head>
-  
 
   <nav class="navbar navbar-expand-m navbar-dark bg-dark bg-hover">
     <a class="btn bg-danger" href="/">Home</a>
@@ -28,83 +27,108 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    
-    {% if session["username"] %}     
-      <form method="post">
-        <label for="loginusername" class="text-primary" style="padding-right: 15px">Jste přihlášen jako {{ session["username"] }}!</label>
-        <button type="submit" name="btn" value="logout" class="btn btn-outline-primary">Odhlásit se</button>
-      </form>
+
+    {% if session["username"] %}
+    <form method="post">
+      <label
+        for="loginusername"
+        class="text-primary"
+        style="padding-right: 15px"
+        >Jste přihlášen jako {{ session["username"] }}!</label
+      >
+      <button
+        type="submit"
+        name="btn"
+        value="logout"
+        class="btn btn-outline-primary"
+      >
+        Odhlásit se
+      </button>
+    </form>
     {% else %}
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Přihlásit se
-        </button>
-        <div class="dropdown" aria-labelledby="dropdownMenuButton">
-          <form method="post" class="dropdown-menu dropdown-menu-right px-4" style="width: 300px">
-            <div class="form-group">
-              <label for="usernamelabel">Přezdívka</label>
-              <input
+    <div class="dropdown">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        Přihlásit se
+      </button>
+      <div class="dropdown" aria-labelledby="dropdownMenuButton">
+        <form
+          method="post"
+          class="dropdown-menu dropdown-menu-right px-4"
+          style="width: 300px"
+        >
+          <div class="form-group">
+            <label for="usernamelabel">Přezdívka</label>
+            <input
               type="text"
               class="form-control"
               name="username"
               placeholder="Přezdívka"
-              required>
-            </div>
-            <div class="form-group">
-              <label for="passwordlabel">Heslo</label>
-              <input
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="passwordlabel">Heslo</label>
+            <input
               type="password"
               class="form-control"
               name="password"
               placeholder="Heslo"
-              required>
-            </div>
-            <button type="submit" name="btn" value="login" class="btn btn-primary">Přihlásit se</button>
-            <button type="submit" name="btn" value="register" class="btn btn-secondary">Zaregistrovat se</button>
-          </form>
-        </div>
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            name="btn"
+            value="login"
+            class="btn btn-primary"
+          >
+            Přihlásit se
+          </button>
+          <button
+            type="submit"
+            name="btn"
+            value="register"
+            class="btn btn-secondary"
+          >
+            Zaregistrovat se
+          </button>
+        </form>
       </div>
+    </div>
     {% endif %}
 
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <nav>
-        <ul style="padding-top: 15px">
+        <ul style="padding-top: 15px; color: #ff69b4">
           {% for ID, nazev, nadpis, text in databaze %}
-          <li><a href="/{{ ID }}">{{ nazev }}</a></li>
+          <li><a style="color: white" href="/{{ ID }}">{{ nazev }}</a></li>
           {% endfor %}
         </ul>
       </nav>
     </div>
   </nav>
 
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      {% for message in messages %}
-        {% if message == "loginsucces" %}
-        <div class="alert alert-success" role="alert">
-          Úspěšně přihlášen!
-        </div>
-        {% elif message == "loginerror" %}
-        <div class="alert alert-danger" role="alert">
-          Špatné jméno nebo heslo!
-        </div>
-        {% elif message == "regsucces" %}
-        <div class="alert alert-succes" role="alert">
-          Úspěšně zaregistrován!
-        </div>
-        {% elif message == "regerror" %}
-        <div class="alert alert-danger" role="alert">
-          Uživatel s tímto jménem již existuje!
-        </div>
-        {% elif message == "logout" %}
-        <div class="alert alert-primary" role="alert">
-          Úspěšně odhlášen!
-        </div>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
-  
+  {% with messages = get_flashed_messages() %} {% if messages %} {% for message
+  in messages %} {% if message == "loginsucces" %}
+  <div class="alert alert-success" role="alert">Úspěšně přihlášen!</div>
+  {% elif message == "loginerror" %}
+  <div class="alert alert-danger" role="alert">Špatné jméno nebo heslo!</div>
+  {% elif message == "regsucces" %}
+  <div class="alert alert-succes" role="alert">Úspěšně zaregistrován!</div>
+  {% elif message == "regerror" %}
+  <div class="alert alert-danger" role="alert">
+    Uživatel s tímto jménem již existuje!
+  </div>
+  {% elif message == "logout" %}
+  <div class="alert alert-primary" role="alert">Úspěšně odhlášen!</div>
+  {% endif %} {% endfor %} {% endif %} {% endwith %}
 
   <body class="body" style="background-color: #333333">
     <header>
