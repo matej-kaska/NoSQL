@@ -1,3 +1,4 @@
+version: '3'
 services:
   redis:
     image: docker.io/bitnami/redis:7.0
@@ -9,11 +10,8 @@ services:
       - 'redis_data:/bitnami/redis/data'
   web:
     build: .
-    container_name: web
     ports:
       - '5000:5000'
-    volumes:
-      - .:/code
     depends_on:
       - redis
 
