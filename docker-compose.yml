@@ -1,0 +1,22 @@
+services:
+  redis:
+    image: docker.io/bitnami/redis:7.0
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis_data:/bitnami/redis/data'
+  web:
+    build: .
+    container_name: web
+    ports:
+      - '5000:5000'
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+
+volumes:
+  redis_data:
+    driver: local

@@ -1,8 +1,7 @@
-from wsgiref.util import request_uri
 from flask import Flask, render_template, request, session, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
-import sqlalchemy
 from os import listdir
+from redis import Redis
 path = "soubory/"
 endOfFile = "divocak"
 separator = ","
@@ -60,6 +59,7 @@ flaskAPR.app_context().push()
 flaskAPR.secret_key = "a0X98Bs5Njv%^aJNO43M8rE!E3yAomIM"
 flaskAPR.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb+mariadbconnector://nsql:123456@82.142.110.169:3306/nsql'
 mariadb.init_app(flaskAPR)
+redis = Redis(host="redis", port=6379)
 
 class Login(mariadb.Model):
     username = mariadb.Column(mariadb.String, primary_key=True, nullable=False)
