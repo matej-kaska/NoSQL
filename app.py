@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from os import listdir
 from redis import Redis
+from SQLModels import Login, Univerzita, Fakulta, Clovek, Pozice, Titul
 path = "soubory/"
 endOfFile = "divocak"
 separator = ","
@@ -53,19 +54,21 @@ def addToDB(nazev, nadpis, text):
     db.append([id, nazev, nadpis, text])
 
 
-mariadb = SQLAlchemy()
+mariadbLogin = SQLAlchemy()
+mariadbUjep = SQLAlchemy()
 flaskAPR = Flask(__name__)
 flaskAPR.app_context().push()
 flaskAPR.secret_key = "a0X98Bs5Njv%^aJNO43M8rE!E3yAomIM"
+
 flaskAPR.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb+mariadbconnector://nsql:123456@82.142.110.169:3306/nsql'
-mariadb.init_app(flaskAPR)
+mariadbLogin.init_app(flaskAPR)
+mariadbLogin.create_all()
+
+flaskAPR.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb+mariadbconnector://nsql:123456@82.142.110.169:3306/nsql-univerzita'
+mariadbUjep.init_app(flaskAPR)
+mariadbUjep.create_all()
+
 redis = Redis(host="redis", port=6379)
-
-class Login(mariadb.Model):
-    username = mariadb.Column(mariadb.String, primary_key=True, nullable=False)
-    password = mariadb.Column(mariadb.String, nullable=False)
-
-mariadb.create_all()
 
 @flaskAPR.route('/', defaults={'path': ''}, methods=["POST"])
 @flaskAPR.route('/<path:path>', methods=["POST"])
@@ -74,13 +77,13 @@ def catchall(path):
     if request.method == "POST":
         if request.form["btn"] == "register":
             username = request.form["username"]
-            if username not in mariadb.session.execute(mariadb.select(Login.username)).scalars():
+            if username not in mariadbLogin.session.execute(mariadbLogin.select(Login.username)).scalars():
                 register = Login(
                     username = request.form["username"],
                     password = request.form["password"]
                 )
-                mariadb.session.add(register)
-                mariadb.session.commit()
+                mariadbLogin.session.add(register)
+                mariadbLogin.session.commit()
                 session["username"] = request.form["username"]
                 flash("regsucces")
                 return redirect(request.referrer)  
@@ -90,8 +93,8 @@ def catchall(path):
         elif request.form["btn"] == "login":
             username = request.form["username"]
             password = request.form["password"]
-            if username in mariadb.session.execute(mariadb.select(Login.username)).scalars():
-                if password == mariadb.session.execute(mariadb.select(Login.password).where(Login.username == username)).scalar():
+            if username in mariadbLogin.session.execute(mariadbLogin.select(Login.username)).scalars():
+                if password == mariadbLogin.session.execute(mariadbLogin.select(Login.password).where(Login.username == username)).scalar():
                     session["username"] = request.form["username"]
                     flash("loginsucces")
                     return redirect(request.referrer)  
@@ -127,6 +130,9 @@ def varName(id):
             localDB.append(value)
     return render_template("soubor.html", databaze=db, newDB=localDB, session=session)
 
+@flaskAPR.route("/univerzita")
+def univerzita():
+    print(mariadbUjep.session.execute(mariadbUjep.select(Titul.titul)).scalars())
 
 if __name__ == "__main__":
     loadDB()
