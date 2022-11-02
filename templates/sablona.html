@@ -105,6 +105,38 @@
 
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <nav>
+        <div class="container" style="padding-top: 3%;">
+          <div class="row">
+          <div class="col-lg-3">
+              <img class="rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI6J3TtB1n_MMINrvBgDUPGzOS7MDzK_K0h2Ya42CaY3yK5QuqDJTrLIsGV07di7IbjVc&usqp=CAU" alt="Generic placeholder image" width="140" height="140">
+              <h2>UJEP</h2>
+              <p>Fakulta a tak</p>
+              <p><a class="btn btn-secondary" href="#" role="button">Info &raquo;</a></p>
+          </div>
+
+          <div class="col-lg-3">
+              <img class="rounded-circle" src="https://png.pngitem.com/pimgs/s/381-3815014_fathers-clipart-owl-father-owl-clipart-hd-png.png" alt="Generic placeholder image" width="140" height="140">
+              <h2>Local</h2>
+              <p>něco lokálního</p>
+              <p><a class="btn btn-secondary" href="#" role="button">Info &raquo;</a></p>
+          </div>
+
+          <div class="col-lg-3">
+              <img class="rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaoIan7T25cYuWnS9SMXZyCbWzty6uzpUJQy3nLhj7GIj1FqgVmkj0EoVG52MXRgWfmCE&usqp=CAU" alt="Generic placeholder image" width="140" height="140">
+              <h2>SQL</h2>
+              <p>asi sql</p>
+              <p><a class="btn btn-secondary" href="#" role="button">Info &raquo;</a></p>
+          </div>
+
+          <div class="col-lg-3">
+              <img class="rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrqkw3PLe1JyDcJmv35o8VWF_PViXup035LyCEWe8tMxRh_5XE0q4u6Jpa-MJPDP3xfyg&usqp=CAU" alt="Generic placeholder image" width="140" height="140">
+              <h2>Redis</h2>
+              <p>nějakej Reddit</p>
+              <p><a class="btn btn-secondary" href="#" role="button">Info &raquo;</a></p>
+          </div>
+
+      </div>
+      <hr class="featurette-divider">
         <ul style="padding-top: 15px; color: #ff69b4">
           {% for ID, nazev, nadpis, text in databaze %}
           <li><a style="color: white" href="/{{ ID }}">{{ nazev }}</a></li>
@@ -142,6 +174,7 @@
     >
       &copy; 2022 by Divočákos
     </footer>
+
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
