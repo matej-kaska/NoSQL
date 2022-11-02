@@ -44,3 +44,7 @@ h1:hover span {
 color: #fff;
 text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #fff;
 }
+
+.featurette-divider {
+    background-color: #e73c7e;
+}
