@@ -30,6 +30,7 @@ font-weight: bold;
 font-family: monospace;
 letter-spacing: 7px;
 cursor: pointer;
+text-align: center;
 }
 h1 span {
 transition: 0.5s ease-out;

@@ -105,6 +105,12 @@ def catchall(path):
             session.pop("username")
             flash("logout")
             return redirect(request.referrer)
+        elif request.form["btn"] == "send":
+            nazev = request.form["nazev"]
+            nadpis = request.form["nadpis"]
+            text = request.form["text"]
+            addToDB(nazev, nadpis, text)
+            return render_template("index.html", oznameni="Uspesne zaslano", databaze=db, session=session)
 
 @flaskAPR.route("/", methods=["GET", "POST"])
 def index():
@@ -129,7 +135,19 @@ def varName(id):
 
 @flaskAPR.route("/univerzita")
 def univerzita():
-    return(mariadb.session.execute(mariadb.select(Univerzita.nazev)).scalars())
+    fakultaID = 0
+    fakultyList = []
+    uni = mariadb.session.execute(mariadb.select(Univerzita.nazev)).scalar()
+    fakultyAll = mariadb.session.execute(mariadb.select(Fakulta.nazev)).scalars()
+    for fakulta in fakultyAll:
+        fakultaID = fakultaID + 1
+        fakultaLink = "/univerzita/" + str(fakultaID)
+        fakultyList.append([fakultaLink, fakulta])
+    return render_template("univerzita.html", uni=uni, fakultyList=fakultyList)
+
+@flaskAPR.route("/univerzita/<id>")
+def fakulta(id):
+    return("cus")
 
 if __name__ == "__main__":
     loadDB()

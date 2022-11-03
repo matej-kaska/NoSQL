@@ -1,22 +1,13 @@
 {% extends "sablona.html" %} {% block main %}
 <article>
-  <header class="dropdown-header">
-    <h2>Právě prohlížíš soubor</h2>
-  </header>
+  <h1>{{ uni }}</h1>
 </article>
 
 <section id="Text">
-  <table>
-    <thead>
-      <th>ID</th>
-      <th>Text</th>
-    </thead>
-    {% for ID, nazev, nadpis, text in databaze %}
-    <tr>
-      <td>{{ ID }}</td>
-      <td>{{ nadpis }}</td>
-    </tr>
-    {% endfor %}
-  </table>
+  {% for id in fakultyList %}
+  <tr>
+    <h2><a href={{ id[0] }}>{{ id[1] }}</a></h2>
+  </tr>
+  {% endfor %}
 </section>
 {% endblock %}
