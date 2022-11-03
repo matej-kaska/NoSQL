@@ -1,13 +1,19 @@
 {% extends "sablona.html" %} {% block main %}
 <article>
-  <h1>{{ uni }}</h1>
+  <header class="header text-center" style="color: black; padding-top: 7%">
+    <h1><span>{{ uni }}</span></h1>
+  </header>
 </article>
 
-<section id="Text">
-  {% for id in fakultyList %}
-  <tr>
-    <h2><a href={{ id[0] }}>{{ id[1] }}</a></h2>
-  </tr>
-  {% endfor %}
+<section class="section"
+id="Text"
+style="padding-left: 17.5%; padding-right: 17.5%; text-align: center; color: white">
+
+    {% for id in fakultyList %}
+    <tr>
+      <td><h2> <hr class="featurette-divider"> <a style="color: #333333;" class="a1" href={{ id[0] }}>{{ id[1] }}</a></h2></td>
+    </tr>
+    {% endfor %}
 </section>
-{% endblock %}
+
+ {% endblock %}
