@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, session, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import select, func
+from sqlalchemy.orm import Session
 from os import listdir
 from redis import Redis
-from SQLModels import Login, Univerzita, Fakulta, Clovek, Pozice, Titul, mariadb
+from SQLModels import Login, Univerzita, Fakulta, Clovek, Pozice, Titul, mariadb, clovek_has_pozice, clovek_has_titul, fakulta_has_clovek
 path = "soubory/"
 endOfFile = "divocak"
 separator = ","
@@ -147,7 +149,45 @@ def univerzita():
 
 @flaskAPR.route("/univerzita/<id>")
 def fakulta(id):
-    return("cus")
+    fakult = mariadb.session.query(Fakulta.nazev).filter(Fakulta.id == id).scalar()
+    allTituly = ['prof.','doc.','Dr.','DrSc.','DSc.','PaeDr.','PhDr.','Ing.','RNDr.','MUDr.','Mgr.','MgA.','et Bc.','Bc.','A.','CSc.','Ph.D.','Msc.','MBA']
+    lidi = []
+    pozice = []
+    finalLidi = []
+    lidiQuery = mariadb.session.query(Clovek.jmeno, Clovek.prijmeni, Pozice.pozice, func.group_concat(Titul.titul)).join(Clovek, Fakulta.fakulty).join(Titul, Clovek.tituly).join(Pozice, Clovek.pozices).filter(Fakulta.id==id).group_by(Clovek.id).order_by(Clovek.id).all()
+    for clovek in lidiQuery:
+        titulyList = []
+        allTitulyIndexes = []
+        titulyDone = ""
+        pozice.append(clovek[2])
+        jmeno = str(clovek[0]) + " " + str(clovek[1])
+        tituly = clovek[3].split(',')
+        for titul in tituly:
+            for allTitul in allTituly:
+                if allTitul == titul:
+                    allTitulyIndexes.append(allTituly.index(titul))
+                    break
+        zipTituly = sorted(zip(allTitulyIndexes, tituly))
+        titulyList = [titul[1] for titul in zipTituly]
+        allTitulyIndexes = []
+        for titul in titulyList:
+            for allTitul in allTituly:
+                if allTitul == titul:
+                    allTitulyIndexes.append(allTituly.index(titul))
+                    break
+        for titul in titulyList:
+            if allTitulyIndexes[titulyList.index(titul)] < 15:
+                if len(titulyDone) == 0:
+                    titulyDone = titul
+                else:
+                    titulyDone = titulyDone + " " + titul
+            else:
+                jmeno = jmeno + ", " + titul
+        jmeno = titulyDone + " " + jmeno
+        lidi.append(jmeno)
+    for i in range(len(lidi)):
+        finalLidi.append([lidi[i], pozice[i]])
+    return render_template("fakulta.html", fakult=fakult, finalLidi=finalLidi)
 
 if __name__ == "__main__":
     loadDB()

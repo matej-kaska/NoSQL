@@ -33,7 +33,7 @@ class Fakulta(mariadb.Model):
     id = mariadb.Column(mariadb.Integer, primary_key=True)
     nazev = mariadb.Column(mariadb.String)
     univerzita_id = mariadb.Column(mariadb.Integer, mariadb.ForeignKey('univerzita.id'))
-    fakulty = mariadb.relationship('Clovek', secondary=fakulta_has_clovek)
+    fakulty = mariadb.relationship('Clovek', secondary=fakulta_has_clovek, backref="fakulta_clovek")
 
 class Clovek(mariadb.Model):
     __bind_key__ = 'mariadbUjep'
@@ -41,8 +41,8 @@ class Clovek(mariadb.Model):
     id = mariadb.Column(mariadb.Integer, primary_key=True)
     jmeno = mariadb.Column(mariadb.String)
     prijmeni = mariadb.Column(mariadb.String)
-    tituly = mariadb.relationship('Titul', secondary=clovek_has_titul)
-    pozice = mariadb.relationship('Pozice', secondary=clovek_has_pozice)
+    tituly = mariadb.relationship('Titul', secondary=clovek_has_titul, backref="clovek_titul")
+    pozices = mariadb.relationship('Pozice', secondary=clovek_has_pozice, backref="clovek_pozice")
 
 class Pozice(mariadb.Model):
     __bind_key__ = 'mariadbUjep'
