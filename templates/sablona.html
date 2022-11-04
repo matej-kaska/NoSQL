@@ -12,25 +12,25 @@
     <link href="static/css/style.css" rel="stylesheet" media="all" />
   </head>
 
-  <nav class="navbar navbar-expand-m navbar-dark bg-dark bg-hover">
-    <a class="btn bg-danger" href="/">Home</a>
-    <div class="btn-group btn-toggle float-right" style="left: 83%">
-      <a href="https://www.youtube.com/watch?v=d1YBv2mWll0" class="btn btn-default btn-sm">DARK</a>
-      <a href="https://www.youtube.com/watch?v=d1YBv2mWll0" class="btn btn-success active btn-sm">LIGHT</a>
-    </div>
-    
+  <body>
 
-    <button
-      class="mx-auto navbar-toggler bg-primary bg-hover"
+  <nav class="navbar navbar-dark bg-dark bg-hover">
+    <form class="form form-inline align-items-center">
+      <button
+      class="navbar-toggler bg-primary bg-hover"
       type="button"
       data-toggle="collapse"
       data-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup"
       aria-expanded="false"
       aria-label="Toggle navigation"
-    >
+      >
       <span class="navbar-toggler-icon"></span>
-    </button>
+      </button>
+
+      <a class="nav-item h4" style="padding-left: 2vh; padding-top: 5px; color: white" href="/">Home</a>
+
+    </form> 
 
     {% if session["username"] %}
     <form method="post">
@@ -111,49 +111,31 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <nav>
         <div class="container" style="padding-top: 3%;">
-          <div class="row">
+          <div class="row text-center">
           <div class="col-lg-3">
-              <img class="rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI6J3TtB1n_MMINrvBgDUPGzOS7MDzK_K0h2Ya42CaY3yK5QuqDJTrLIsGV07di7IbjVc&usqp=CAU" alt="Generic placeholder image" width="140" height="140">
-              <h2>UJEP</h2>
-              <p>Fakulta a tak</p>
-              <p><a class="btn btn-secondary" href="/univerzita" role="button">Info &raquo;</a></p>
+              <img class="rounded-circle" src="https://www.ujep.cz/wp-content/uploads/2017/02/LOGO_UJEP_CZ_RGB_zkratka.gif" alt="Generic placeholder image" width="140" height="140">
+              <h2 style="position: center;">UJEP</h2>
+              <p><a class="btn btn-secondary" href="/univerzita" role="button">Přejít &raquo;</a></p>
           </div>
 
           <div class="col-lg-3">
-              <img class="rounded-circle" src="https://png.pngitem.com/pimgs/s/381-3815014_fathers-clipart-owl-father-owl-clipart-hd-png.png" alt="Generic placeholder image" width="140" height="140">
+              <img class="rounded-circle" src="https://pngset.com/images/database-icon-gray-world-of-warcraft-transparent-png-1794822.png" alt="Generic placeholder image" width="140" height="140">
               <h2>Local</h2>
-              <p>něco lokálního</p>
-              <p><a class="btn btn-secondary" href="#" role="button">Info &raquo;</a></p>
+              <p><a class="btn btn-secondary" href="#" role="button">Přejít &raquo;</a></p>
           </div>
 
           <div class="col-lg-3">
-              <img class="rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaoIan7T25cYuWnS9SMXZyCbWzty6uzpUJQy3nLhj7GIj1FqgVmkj0EoVG52MXRgWfmCE&usqp=CAU" alt="Generic placeholder image" width="140" height="140">
+              <img class="rounded-circle" src="https://www.silhouette-illust.com/wp-content/uploads/2017/02/icon_sql_server_25604-300x300.jpg" alt="Generic placeholder image" width="140" height="140">
               <h2>SQL</h2>
-              <p>asi sql</p>
-              <p><a class="btn btn-secondary" href="#" role="button">Info &raquo;</a></p>
+              <p><a class="btn btn-secondary" href="#" role="button">Přejít &raquo;</a></p>
           </div>
 
           <div class="col-lg-3">
-              <img class="rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrqkw3PLe1JyDcJmv35o8VWF_PViXup035LyCEWe8tMxRh_5XE0q4u6Jpa-MJPDP3xfyg&usqp=CAU" alt="Generic placeholder image" width="140" height="140">
+              <img class="rounded-circle" src="https://icons.veryicon.com/png/o/miscellaneous/gwidc_1/redis.png" alt="Generic placeholder image" width="140" height="140">
               <h2>Redis</h2>
-              <p>nějakej Reddit</p>
-              <p><a class="btn btn-secondary" href="#" role="button">Info &raquo;</a></p>
+              <p><a class="btn btn-secondary" href="#" role="button">Přejít &raquo;</a></p>
           </div>
       </div>
-
-      <!-- SEZNAM SOUBORŮ V NAVBARU -->
-      <hr class="featurette-divider">
-        <div class="d-flex align-content-start flex-wrap" style="color:aqua">
-          {% for ID, nazev, nadpis, text in databaze %}
-            <div class="p-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-text" viewBox="0 0 16 16">
-                  <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
-                  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
-                </svg>
-                <a style="color: white" href="/{{ ID }}">{{ nazev }}</a>
-            </div>
-          {% endfor %}
-        </div>
       </nav>
     </div>
   </nav>
@@ -173,7 +155,6 @@
   <div class="alert alert-primary" role="alert">Úspěšně odhlášen!</div>
   {% endif %} {% endfor %} {% endif %} {% endwith %}
 
-  <body class="body" style="background-color: #333333">
     <header>
       <h1>{% block nadpis %} {% endblock %}</h1>
     </header>
