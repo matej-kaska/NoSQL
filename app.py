@@ -206,7 +206,7 @@ def getFakulta(id):
         finalLidi.append([lidi[i], pozice[i]])
     data["finalLidi"] = finalLidi
     end = time.time()
-    print(end - start)
+    print("Načtení z db trvalo: " + str(end - start) + "s")
     return data
 
 @flaskAPR.route("/univerzita/<id>")
@@ -217,31 +217,43 @@ def fakulta(id):
 @flaskAPR.route("/redis")
 def univerzitaRedis():
     if r.exists("univerzita"):
+        start = time.time()
         textData = r.get("univerzita")
         data = pickle.loads(textData)
         print("loaded from redis")
+        end = time.time()
+        print("Načtení z redisu trvalo: " + str(end - start) + "s")
         return render_template("univerzita.html", uni=data["uni"], fakultyList=data["fakultyList"])
     else:
+        start = time.time()
         data = getUniverzita("redis")
         textData = pickle.dumps(data)
         r.set("univerzita", textData)
         r.expire("univerzita", redisTimeout)
         print("been saved to redis")
+        end = time.time()
+        print("uložení do redisu z db trvalo: " + str(end - start) + "s")
         return render_template("univerzita.html", uni=data["uni"], fakultyList=data["fakultyList"])
 
 @flaskAPR.route("/redis/<id>")
 def fakultaRedis(id):
     if r.exists("fakulta"+str(id)):
+        start = time.time()
         textData = r.get("fakulta"+str(id))
         data = pickle.loads(textData)
         print("loaded from redis")
+        end = time.time()
+        print("Načtení z redisu trvalo: " + str(end - start) + "s")
         return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"])
     else:
+        start = time.time()
         data = getFakulta(id)
         textData = pickle.dumps(data)
         r.set("fakulta"+str(id), textData)
         r.expire("fakulta"+str(id), redisTimeout)
         print("been saved to redis")
+        end = time.time()
+        print("uložení do redisu z db trvalo: " + str(end - start) + "s")
         return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"])
 
 if __name__ == "__main__":
