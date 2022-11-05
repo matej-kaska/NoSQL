@@ -13,6 +13,7 @@ separator = ","
 
 db = []
 r = Redis(host="192.168.1.199", port=6379)
+redisTimeout = 60 # sec
 
 
 def getLineInFile(path):
@@ -224,7 +225,7 @@ def univerzitaRedis():
         data = getUniverzita("redis")
         textData = pickle.dumps(data)
         r.set("univerzita", textData)
-        r.expire("univerzita", 60)
+        r.expire("univerzita", redisTimeout)
         print("been saved to redis")
         return render_template("univerzita.html", uni=data["uni"], fakultyList=data["fakultyList"])
 
@@ -239,7 +240,7 @@ def fakultaRedis(id):
         data = getFakulta(id)
         textData = pickle.dumps(data)
         r.set("fakulta"+str(id), textData)
-        r.expire("fakulta"+str(id), 60)
+        r.expire("fakulta"+str(id), redisTimeout)
         print("been saved to redis")
         return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"])
 
