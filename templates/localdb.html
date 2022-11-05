@@ -12,7 +12,7 @@
 >
   <table
     class="table table-hover table-bordered table-striped"
-    style= "background-color: transparent; color: rgb(192, 192, 192);""
+    style= "background-color: #333333; color: white;"
   >
     <thead>
       <th>ID</th>
@@ -21,7 +21,7 @@
     {% for ID, nazev, nadpis, text in databaze %}
     <tr>
       <td>{{ ID }}</td>
-      <td><a style="color: #333333;" class="a1" href=localdb/{{ ID }}>{{ nadpis }}</a></td>
+      <td><a style="color: white;" href=localdb/{{ ID }}>{{ nadpis }}</a></td>
     </tr>
     {% endfor %}
   </table>

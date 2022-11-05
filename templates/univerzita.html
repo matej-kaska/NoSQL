@@ -11,7 +11,9 @@ style="padding-left: 17.5%; padding-right: 17.5%; text-align: center; color: whi
 
     {% for id in fakultyList %}
     <tr>
-      <td><h2> <hr class="featurette-divider"> <a style="color: #333333;" class="a1" href={{ id[0] }}>{{ id[1] }}</a></h2></td>
+      <td>
+        <h2><hr class="featurette-divider"> <a style="color: #333333;" class="a1" href={{ id[0] }}>{{ id[1] }}</a></h2>
+      </td>
     </tr>
     {% endfor %}
 </section>
