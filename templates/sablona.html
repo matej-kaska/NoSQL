@@ -11,6 +11,7 @@
     />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"  media="all" />
   </head>
+
   <body>
 
   <nav class="navbar navbar-dark bg-dark bg-hover">
@@ -49,6 +50,7 @@
         Odhlásit se
       </button>
     </form>
+
     {% else %}
     <div class="dropdown">
       <button
@@ -144,20 +146,20 @@
     </div>
   </nav>
 
-  {% with messages = get_flashed_messages() %} {% if messages %} {% for message
-  in messages %} {% if message == "loginsucces" %}
-  <div class="alert alert-success" role="alert">Úspěšně přihlášen!</div>
-  {% elif message == "loginerror" %}
-  <div class="alert alert-danger" role="alert">Špatné jméno nebo heslo!</div>
-  {% elif message == "regsucces" %}
-  <div class="alert alert-success" role="alert">Úspěšně zaregistrován!</div>
-  {% elif message == "regerror" %}
-  <div class="alert alert-danger" role="alert">
-    Uživatel s tímto jménem již existuje!
-  </div>
-  {% elif message == "logout" %}
-  <div class="alert alert-primary" role="alert">Úspěšně odhlášen!</div>
-  {% endif %} {% endfor %} {% endif %} {% endwith %}
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for message
+    in messages %} {% if message == "loginsucces" %}
+    <div class="alert alert-success" role="alert">Úspěšně přihlášen!</div>
+    {% elif message == "loginerror" %}
+    <div class="alert alert-danger" role="alert">Špatné jméno nebo heslo!</div>
+    {% elif message == "regsucces" %}
+    <div class="alert alert-success" role="alert">Úspěšně zaregistrován!</div>
+    {% elif message == "regerror" %}
+    <div class="alert alert-danger" role="alert">
+      Uživatel s tímto jménem již existuje!
+    </div>
+    {% elif message == "logout" %}
+    <div class="alert alert-primary" role="alert">Úspěšně odhlášen!</div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
 
     <header>
       <h1>{% block nadpis %} {% endblock %}</h1>
