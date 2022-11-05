@@ -197,6 +197,10 @@ def fakulta(id):
     print(end - start)
     return render_template("fakulta.html", fakult=fakult, finalLidi=finalLidi)
 
+@flaskAPR.route("/redis")
+def funredis():
+    return render_template("fakulta.html")
+
 if __name__ == "__main__":
     loadDB()
     flaskAPR.run(debug=True, host="0.0.0.0")
