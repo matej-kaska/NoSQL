@@ -143,7 +143,7 @@ def varName(id):
             localDB.append(value)
     return render_template("soubor.html", databaze=db, newDB=localDB, session=session)
 
-def getUniverzita(link="univerzita"):
+def getUniverzita():
     data = {}
     fakultaID = 0
     fakultyList = []
@@ -151,16 +151,10 @@ def getUniverzita(link="univerzita"):
     fakultyAll = mariadb.session.execute(mariadb.select(Fakulta.nazev)).scalars()
     for fakulta in fakultyAll:
         fakultaID = fakultaID + 1
-        fakultaLink = "/" + link + "/" + str(fakultaID)
+        fakultaLink = "/univerzita/" + str(fakultaID)
         fakultyList.append([fakultaLink, fakulta])
     data["fakultyList"] = fakultyList
     return data
-
-
-@flaskAPR.route("/univerzita")
-def univerzita():
-    data = getUniverzita()
-    return render_template("univerzita.html", uni=data["uni"], fakultyList=data["fakultyList"])
 
 def getFakulta(id):
     start = time.time()
@@ -209,12 +203,7 @@ def getFakulta(id):
     print("Načtení z db trvalo: " + str(end - start) + "s")
     return data
 
-@flaskAPR.route("/univerzita/<id>")
-def fakulta(id):
-    data = getFakulta(id)
-    return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"])
-
-@flaskAPR.route("/redis")
+@flaskAPR.route("/univerzita")
 def univerzitaRedis():
     if r.exists("univerzita"):
         start = time.time()
@@ -222,20 +211,19 @@ def univerzitaRedis():
         data = pickle.loads(textData)
         print("loaded from redis")
         end = time.time()
-        print("Načtení z redisu trvalo: " + str(end - start) + "s")
-        return render_template("univerzita.html", uni=data["uni"], fakultyList=data["fakultyList"])
+        return render_template("univerzita.html", uni=data["uni"], fakultyList=data["fakultyList"], time="redis: " + str(end - start) + "s")
     else:
         start = time.time()
-        data = getUniverzita("redis")
+        data = getUniverzita()
         textData = pickle.dumps(data)
         r.set("univerzita", textData)
         r.expire("univerzita", redisTimeout)
         print("been saved to redis")
         end = time.time()
         print("uložení do redisu z db trvalo: " + str(end - start) + "s")
-        return render_template("univerzita.html", uni=data["uni"], fakultyList=data["fakultyList"])
+        return render_template("univerzita.html", uni=data["uni"], fakultyList=data["fakultyList"], time="db: " + str(end - start) + "s")
 
-@flaskAPR.route("/redis/<id>")
+@flaskAPR.route("/univerzita/<id>")
 def fakultaRedis(id):
     if r.exists("fakulta"+str(id)):
         start = time.time()
@@ -244,7 +232,7 @@ def fakultaRedis(id):
         print("loaded from redis")
         end = time.time()
         print("Načtení z redisu trvalo: " + str(end - start) + "s")
-        return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"])
+        return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"], time="redis: " + str(end - start) + "s")
     else:
         start = time.time()
         data = getFakulta(id)
@@ -254,7 +242,16 @@ def fakultaRedis(id):
         print("been saved to redis")
         end = time.time()
         print("uložení do redisu z db trvalo: " + str(end - start) + "s")
-        return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"])
+        return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"], time="db: " + str(end - start) + "s")
+
+@flaskAPR.route("/redis")
+def redisTable():
+    data = []
+    keys = r.scan_iter()
+    print(len(data))
+    for key in keys:
+        data.append(pickle.loads(r.get(key)))
+    return render_template("redis.html", redis=data)
 
 if __name__ == "__main__":
     loadDB()

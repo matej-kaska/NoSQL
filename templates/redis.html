@@ -1,0 +1,18 @@
+{% extends "sablona.html" %} {% block main %}
+<article>
+  <header class="header text-center" style="color: black; padding-top: 3%">
+    <h1><span>Redis</span></h1>
+  </header>
+</article>
+
+<section class="section"
+id="Text"
+style="padding-left: 17.5%; padding-right: 17.5%; text-align: center; color: white">
+{% if redis %}
+{% for data in redis %}
+{{ data }}
+{% endfor %}
+{% endif %}
+</section>
+
+ {% endblock %}
