@@ -127,7 +127,7 @@
           <div class="col-lg-3">
               <img class="rounded-circle" src="{{url_for('static', filename='resources/sql-logo.png')}}" alt="Generic placeholder image" width="140" height="140">
               <h2>SQL</h2>
-              <p><a class="btn btn-secondary" href="#" role="button">Přejít &raquo;</a></p>
+              <p><a class="btn btn-secondary" href="/sql" role="button">Přejít &raquo;</a></p>
           </div>
 
           <div class="col-lg-3">
@@ -146,7 +146,7 @@
   {% elif message == "loginerror" %}
   <div class="alert alert-danger" role="alert">Špatné jméno nebo heslo!</div>
   {% elif message == "regsucces" %}
-  <div class="alert alert-succes" role="alert">Úspěšně zaregistrován!</div>
+  <div class="alert alert-success" role="alert">Úspěšně zaregistrován!</div>
   {% elif message == "regerror" %}
   <div class="alert alert-danger" role="alert">
     Uživatel s tímto jménem již existuje!

@@ -1,0 +1,29 @@
+{% extends "sablona.html" %} {% block main %}
+<article>
+  <header class="header text-center" style="color: black; padding-top: 7%">
+    <h1><span>SQL - Login</span></h1>
+  </header>
+</article>
+
+<section
+  class="section position-center"
+  id="Text"
+  style="padding-left: 15%; padding-right: 15%"
+>
+  <table
+    class="table table-hover table-bordered table-striped"
+    style= "background-color: transparent; color: rgb(192, 192, 192);""
+  >
+    <thead>
+      <th>Přezdívka</th>
+      <th>Heslo</th>
+    </thead>
+    {% for prezdivka, heslo in logindb %}
+    <tr>
+      <td>{{ prezdivka }}</td>
+      <td>{{ heslo }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</section>
+{% endblock %}

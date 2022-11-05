@@ -120,6 +120,12 @@ def localdb():
             return render_template("localdb.html", oznameni="Uspesne zaslano", databaze=db, session=session)
     return catchall(path)
 
+@flaskAPR.route("/sql", methods=["GET"])
+def sql():
+    if request.method == "GET":
+        logindb = mariadb.session.query(Login.username, Login.password)
+        return render_template("sql.html", logindb=logindb, session=session)
+
 @flaskAPR.route("/", methods=["GET"])
 def index():
     if request.method == "GET":
