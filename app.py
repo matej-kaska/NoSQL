@@ -5,12 +5,14 @@ from sqlalchemy.orm import Session
 from os import listdir
 from redis import Redis
 import time
+import pickle
 from SQLModels import Login, Univerzita, Fakulta, Clovek, Pozice, Titul, mariadb, clovek_has_pozice, clovek_has_titul, fakulta_has_clovek
 path = "soubory/"
 endOfFile = "divocak"
 separator = ","
 
 db = []
+r = Redis(host="192.168.1.199", port=6379)
 
 
 def getLineInFile(path):
@@ -140,22 +142,30 @@ def varName(id):
             localDB.append(value)
     return render_template("soubor.html", databaze=db, newDB=localDB, session=session)
 
-@flaskAPR.route("/univerzita")
-def univerzita():
+def getUniverzita(link="univerzita"):
+    data = {}
     fakultaID = 0
     fakultyList = []
-    uni = mariadb.session.execute(mariadb.select(Univerzita.nazev)).scalar()
+    data["uni"] = mariadb.session.execute(mariadb.select(Univerzita.nazev)).scalar()
     fakultyAll = mariadb.session.execute(mariadb.select(Fakulta.nazev)).scalars()
     for fakulta in fakultyAll:
         fakultaID = fakultaID + 1
-        fakultaLink = "/univerzita/" + str(fakultaID)
+        fakultaLink = "/" + link + "/" + str(fakultaID)
         fakultyList.append([fakultaLink, fakulta])
-    return render_template("univerzita.html", uni=uni, fakultyList=fakultyList)
+    data["fakultyList"] = fakultyList
+    return data
 
-@flaskAPR.route("/univerzita/<id>")
-def fakulta(id):
+
+@flaskAPR.route("/univerzita")
+def univerzita():
+    data = getUniverzita()
+    return render_template("univerzita.html", uni=data["uni"], fakultyList=data["fakultyList"])
+
+def getFakulta(id):
     start = time.time()
+    data = {}
     fakult = mariadb.session.query(Fakulta.nazev).filter(Fakulta.id == id).scalar()
+    data["fakult"] = fakult
     allTituly = ['prof.','doc.','Dr.','DrSc.','DSc.','PaeDr.','PhDr.','Ing.','RNDr.','MUDr.','Mgr.','MgA.','et Bc.','Bc.','A.','CSc.','Ph.D.','Msc.','MBA']
     lidi = []
     pozice = []
@@ -193,13 +203,45 @@ def fakulta(id):
         lidi.append(jmeno)
     for i in range(len(lidi)):
         finalLidi.append([lidi[i], pozice[i]])
+    data["finalLidi"] = finalLidi
     end = time.time()
     print(end - start)
-    return render_template("fakulta.html", fakult=fakult, finalLidi=finalLidi)
+    return data
+
+@flaskAPR.route("/univerzita/<id>")
+def fakulta(id):
+    data = getFakulta(id)
+    return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"])
 
 @flaskAPR.route("/redis")
-def funredis():
-    return render_template("fakulta.html")
+def univerzitaRedis():
+    if r.exists("univerzita"):
+        textData = r.get("univerzita")
+        data = pickle.loads(textData)
+        print("loaded from redis")
+        return render_template("univerzita.html", uni=data["uni"], fakultyList=data["fakultyList"])
+    else:
+        data = getUniverzita("redis")
+        textData = pickle.dumps(data)
+        r.set("univerzita", textData)
+        r.expire("univerzita", 60)
+        print("been saved to redis")
+        return render_template("univerzita.html", uni=data["uni"], fakultyList=data["fakultyList"])
+
+@flaskAPR.route("/redis/<id>")
+def fakultaRedis(id):
+    if r.exists("fakulta"+str(id)):
+        textData = r.get("fakulta"+str(id))
+        data = pickle.loads(textData)
+        print("loaded from redis")
+        return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"])
+    else:
+        data = getFakulta(id)
+        textData = pickle.dumps(data)
+        r.set("fakulta"+str(id), textData)
+        r.expire("fakulta"+str(id), 60)
+        print("been saved to redis")
+        return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"])
 
 if __name__ == "__main__":
     loadDB()
