@@ -5,16 +5,13 @@
   </header>
 </article>
 
-<section class="section"
-id="Text"
-style="padding-left: 17.5%; padding-right: 17.5%; text-align: center; color: #333333">
-
+<section class="section" id="Text">
     {% for lidi in finalLidi %}
-    <tr>
+    <div>
         <td><h2> <hr class="featurette-divider">{{ lidi[0] }}</a></h2>
             <h3>{{ lidi[1] }}</h3>
         </td>
-    </tr>
+    </div>
     {% endfor %}
 </section>
 {% endblock %}
