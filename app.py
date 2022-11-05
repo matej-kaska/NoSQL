@@ -4,6 +4,7 @@ from sqlalchemy import select, func
 from sqlalchemy.orm import Session
 from os import listdir
 from redis import Redis
+import time
 from SQLModels import Login, Univerzita, Fakulta, Clovek, Pozice, Titul, mariadb, clovek_has_pozice, clovek_has_titul, fakulta_has_clovek
 path = "soubory/"
 endOfFile = "divocak"
@@ -153,6 +154,7 @@ def univerzita():
 
 @flaskAPR.route("/univerzita/<id>")
 def fakulta(id):
+    start = time.time()
     fakult = mariadb.session.query(Fakulta.nazev).filter(Fakulta.id == id).scalar()
     allTituly = ['prof.','doc.','Dr.','DrSc.','DSc.','PaeDr.','PhDr.','Ing.','RNDr.','MUDr.','Mgr.','MgA.','et Bc.','Bc.','A.','CSc.','Ph.D.','Msc.','MBA']
     lidi = []
@@ -191,6 +193,8 @@ def fakulta(id):
         lidi.append(jmeno)
     for i in range(len(lidi)):
         finalLidi.append([lidi[i], pozice[i]])
+    end = time.time()
+    print(end - start)
     return render_template("fakulta.html", fakult=fakult, finalLidi=finalLidi)
 
 if __name__ == "__main__":
