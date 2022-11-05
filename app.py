@@ -69,10 +69,9 @@ mariadb.create_all()
 
 redis = Redis(host="redis", port=6379)
 
-@flaskAPR.route('/', defaults={'path': ''}, methods=["POST"])
 @flaskAPR.route('/<path:path>', methods=["POST"])
+@flaskAPR.route('/', defaults={'path': ''}, methods=["POST"])
 def catchall(path):
-    print(path)
     if request.method == "POST":
         if request.form["btn"] == "register":
             username = request.form["username"]
@@ -107,25 +106,24 @@ def catchall(path):
             session.pop("username")
             flash("logout")
             return redirect(request.referrer)
-        elif request.form["btn"] == "send":
-            nazev = request.form["nazev"]
-            nadpis = request.form["nadpis"]
-            text = request.form["text"]
-            addToDB(nazev, nadpis, text)
-            return render_template("index.html", oznameni="Uspesne zaslano", databaze=db, session=session)
 
-@flaskAPR.route("/", methods=["GET", "POST"])
-def index():
+@flaskAPR.route("/localdb", methods=["GET", "POST"])
+def localdb():
     if request.method == "GET":
-        return render_template("index.html", databaze=db, session=session)
+        return render_template("localdb.html", databaze=db, session=session)
     elif request.method == "POST":
         if request.form["btn"] == "send":
             nazev = request.form["nazev"]
             nadpis = request.form["nadpis"]
             text = request.form["text"]
             addToDB(nazev, nadpis, text)
-            return render_template("index.html", oznameni="Uspesne zaslano", databaze=db, session=session)
+            return render_template("localdb.html", oznameni="Uspesne zaslano", databaze=db, session=session)
+    return catchall(path)
 
+@flaskAPR.route("/", methods=["GET"])
+def index():
+    if request.method == "GET":
+        return render_template("index.html", databaze=db, session=session)
 
 @flaskAPR.route("/<id>")
 def varName(id):

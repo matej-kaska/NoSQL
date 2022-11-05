@@ -1,13 +1,13 @@
 {% extends "sablona.html" %} {% block main %}
 <article>
-  <header class="header text-center" style="color: black; padding-top: 7%">
+  <header class="header text-center" style="color: black; padding-top: 3%">
     <h1><span>{{ fakult }}</span></h1>
   </header>
 </article>
 
 <section class="section"
 id="Text"
-style="padding-left: 17.5%; padding-right: 17.5%; text-align: center; color: white">
+style="padding-left: 17.5%; padding-right: 17.5%; text-align: center; color: #333333">
 
     {% for lidi in finalLidi %}
     <tr>
@@ -17,5 +17,4 @@ style="padding-left: 17.5%; padding-right: 17.5%; text-align: center; color: whi
     </tr>
     {% endfor %}
 </section>
-
- {% endblock %}
+{% endblock %}

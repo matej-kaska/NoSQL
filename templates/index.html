@@ -1,97 +1,13 @@
 {% extends "sablona.html" %} {% block main %}
 <article>
-  <header class="header text-center" style="color: black; padding-top: 7%">
+  <header class="header text-center" style="color: black; padding-top: 15%">
     <div class="waviy">
-      <span style="--i:1">D</span>
-      <span style="--i:2">A</span>
-      <span style="--i:3">T</span>
-      <span style="--i:4">A</span>
-      <span style="--i:5">B</span>
-      <span style="--i:6">Á</span>
-      <span style="--i:7">Z</span>
-      <span style="--i:8">E</span>
+      <span style="--i:1">N</span>
+      <span style="--i:2">o</span>
+      <span style="--i:3">S</span>
+      <span style="--i:4">Q</span>
+      <span style="--i:5">L</span>
      </div>
   </header>
 </article>
-
-<section
-  class="section position-center"
-  id="Text"
-  style="padding-left: 15%; padding-right: 15%"
->
-  <table
-    class="table table-hover table-bordered table-striped"
-    style= "background-color: transparent; color: rgb(192, 192, 192);""
-  >
-    <thead>
-      <th>ID</th>
-      <th>Text</th>
-    </thead>
-    {% for ID, nazev, nadpis, text in databaze %}
-    <tr>
-      <td>{{ ID }}</td>
-      <td>{{ nadpis }}</td>
-    </tr>
-    {% endfor %}
-  </table>
-</section>
-
-<br />
-<br />
-<section
-  class="section"
-  id="Odeslat text"
-  style="color: white; padding-left: 25%; padding-right: 25%"
->
-  <form action="" method="post">
-    <fieldset>
-      <div class="input-group mb-0">
-        <span class="input-group-text" id="basic-addon1">Název</span>
-        <input
-          type="text"
-          class="form-control"
-          name="nazev"
-          placeholder="Zadej název"
-          required
-          
-        />
-      </div>
-      <br />
-
-      <div class="input-group mb-0" >
-        <span class="input-group-text" id="basic-addon1">Nadpis</span>
-        <input
-          type="text"
-          class="form-control"
-          name="nadpis"
-          placeholder="Zadej nadpis"
-          required
-        />
-      </div>
-      <br />
-
-      <div class="input-group mb-0">
-        <span class="input-group-text" id="basic-addon1">Text</span>
-        <input
-          type="text"
-          class="form-control"
-          name="text"
-          placeholder="Zadej text"
-          required
-        />
-      </div>
-      <br />
-
-      <button
-        class="btn bg-dark"
-        type="submit"
-        name="btn"
-        value="send"
-        style="margin-bottom: 25px; color: white; margin-left: 91.5%"
-      >
-        Potvrdit
-      </button>
-    </fieldset>
-  </form>
-</section>
 {% endblock %}

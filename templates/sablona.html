@@ -11,7 +11,6 @@
     />
     <link href="static/css/style.css" rel="stylesheet" media="all" />
   </head>
-
   <body>
 
   <nav class="navbar navbar-dark bg-dark bg-hover">
@@ -27,9 +26,10 @@
       >
       <span class="navbar-toggler-icon"></span>
       </button>
-
-      <a class="nav-item h4" style="padding-left: 2vh; padding-top: 5px; color: white" href="/">Home</a>
-
+      <a class="btn btn-secondary"style="margin-left: 10px" href="/" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+        <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+      </svg></a>
     </form> 
 
     {% if session["username"] %}
@@ -113,25 +113,25 @@
         <div class="container" style="padding-top: 3%;">
           <div class="row text-center">
           <div class="col-lg-3">
-              <img class="rounded-circle" src="https://www.ujep.cz/wp-content/uploads/2017/02/LOGO_UJEP_CZ_RGB_zkratka.gif" alt="Generic placeholder image" width="140" height="140">
+              <img class="rounded-circle" src="{{url_for('static', filename='resources/ujep-logo.png')}}" alt="Generic placeholder image" width="140" height="140">
               <h2 style="position: center;">UJEP</h2>
               <p><a class="btn btn-secondary" href="/univerzita" role="button">Přejít &raquo;</a></p>
           </div>
 
           <div class="col-lg-3">
-              <img class="rounded-circle" src="https://pngset.com/images/database-icon-gray-world-of-warcraft-transparent-png-1794822.png" alt="Generic placeholder image" width="140" height="140">
+              <img class="rounded-circle" src="{{url_for('static', filename='resources/local-logo.png')}}" alt="Generic placeholder image" width="140" height="140">
               <h2>Local</h2>
-              <p><a class="btn btn-secondary" href="#" role="button">Přejít &raquo;</a></p>
+              <p><a class="btn btn-secondary" href="/localdb" role="button">Přejít &raquo;</a></p>
           </div>
 
           <div class="col-lg-3">
-              <img class="rounded-circle" src="https://www.silhouette-illust.com/wp-content/uploads/2017/02/icon_sql_server_25604-300x300.jpg" alt="Generic placeholder image" width="140" height="140">
+              <img class="rounded-circle" src="{{url_for('static', filename='resources/sql-logo.png')}}" alt="Generic placeholder image" width="140" height="140">
               <h2>SQL</h2>
               <p><a class="btn btn-secondary" href="#" role="button">Přejít &raquo;</a></p>
           </div>
 
           <div class="col-lg-3">
-              <img class="rounded-circle" src="https://icons.veryicon.com/png/o/miscellaneous/gwidc_1/redis.png" alt="Generic placeholder image" width="140" height="140">
+              <img class="rounded-circle" src="{{url_for('static', filename='resources/redis-logo.png')}}" alt="Generic placeholder image" width="140" height="140">
               <h2>Redis</h2>
               <p><a class="btn btn-secondary" href="#" role="button">Přejít &raquo;</a></p>
           </div>
@@ -160,6 +160,8 @@
     </header>
 
     <main>{% block main %} {% endblock %}</main>
+
+
 
     <footer
       class="footer fixed-bottom text-center"
