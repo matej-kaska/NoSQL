@@ -21,7 +21,7 @@
     {% for ID, nazev, nadpis, text in databaze %}
     <tr>
       <td>{{ ID }}</td>
-      <td>{{ nadpis }}</td>
+      <td><a style="color: #333333;" class="a1" href=localdb/{{ ID }}>{{ nadpis }}</a></td>
     </tr>
     {% endfor %}
   </table>

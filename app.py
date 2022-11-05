@@ -131,7 +131,7 @@ def index():
     if request.method == "GET":
         return render_template("index.html", databaze=db, session=session)
 
-@flaskAPR.route("/<id>")
+@flaskAPR.route("/localdb/<id>")
 def varName(id):
     localDB = []
     for value in db:
