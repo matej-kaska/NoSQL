@@ -1,16 +1,23 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin-bottom: 60px; /* Margin bottom by footer height */
+}
+
+
 /* FOOTER */
 footer{
-    position: fixed;
-    height: 2.5%;
-    width: 100%;;
+    position: absolute;
     bottom: 0;
-    clear: both;
-    background-color: black;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
     color: white;
-    float: left;
-    overflow: auto;
-    text-align: center;
-  }
+    text-align: left;
+    padding-left: 2%;
+}
 
 /*WALLPAPER*/
 body {
@@ -57,7 +64,6 @@ span.input-group-text {
   font-size: 125px;
 }
 .waviy span {
-  font-family: 'Alfa Slab One', cursive;
   position: relative;
   display: inline-block;
   color: #fff;
