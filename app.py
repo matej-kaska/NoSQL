@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, session, flash, redirect
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import select, func
-from sqlalchemy.orm import Session
+from sqlalchemy import func
 from os import listdir
 from redis import Redis
 import time
@@ -246,11 +244,23 @@ def fakultaRedis(id):
 @flaskAPR.route("/redis")
 def redisTable():
     data = []
+    seznam = {}
     keys = r.scan_iter()
     for key in keys:
         data.append(pickle.loads(r.get(key)))
     print(len(data))
-    return render_template("redis.html", redis=data)
+    for key in data:
+        key = str(key)
+        sKey = key[key.find("{'") + 2:key.find("':")]
+        key = key[key.find("':") + 4:]
+        sValue = key[:key.find("'")]
+        key = key[key.find("', '") + 4:]
+        sKey2 = key[:key.find("':")]
+        key = key[key.find("':") + 4:]
+        sValue2 = key[:key.find("]]") + 1]
+        seznam.update({sKey: sValue})
+        seznam.update({sKey2: sValue2})
+    return render_template("redis.html", redis=seznam)
 
 if __name__ == "__main__":
     loadDB()

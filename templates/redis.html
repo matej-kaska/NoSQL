@@ -9,8 +9,9 @@
 id="Text"
 style="padding-left: 17.5%; padding-right: 17.5%; text-align: center; color: white">
 {% if redis %}
-{% for data in redis %}
-{{ data }}
+{% for key, value in redis.items() %}
+{{ key }}
+{{ value }}
 {% endfor %}
 {% endif %}
 </section>
