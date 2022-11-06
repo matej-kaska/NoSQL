@@ -11,7 +11,10 @@ style="padding-left: 17.5%; padding-right: 17.5%; text-align: center; color: whi
 {% if redis %}
 {% for key, value in redis.items() %}
 {{ key }}
+<br>
 {{ value }}
+<br>
+<br>
 {% endfor %}
 {% endif %}
 </section>
