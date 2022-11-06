@@ -12,7 +12,7 @@ endOfFile = "divocak"
 separator = ","
 
 db = []
-r = Redis(host="192.168.1.199", port=6379)
+r = Redis(host="82.142.110.169", port=6379)
 redisTimeout = 60 # sec
 
 
