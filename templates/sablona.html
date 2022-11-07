@@ -152,32 +152,27 @@
 
     {% if message == "loginsucces" %}
     <div class="alert alert-success alert-dismissible fade show js-alert" id="success-alert" role="alert">
-      <button type="button" class="close" data-dismiss="alert">x</button>
-      <strong>Přihlášení proběhlo úspěšně!</strong>
+      Přihlášení proběhlo úspěšně!
     </div>
 
     {% elif message == "loginerror" %}
     <div class="alert alert-danger alert-dismissible fade show js-alert" id="error-alert" role="alert">
-      <button type="button" class="close" data-dismiss="alert">x</button>
-      <strong>Přihlášení se nezdařilo!</strong>
+      Přihlášení se nezdařilo!
     </div>
 
     {% elif message == "regsucces" %}
     <div class="alert alert-success alert-dismissible fade show js-alert" id="success-alert" role="alert">
-      <button type="button" class="close" data-dismiss="alert">x</button>
-      <strong>Registrace proběhla úspěšně!</strong>
+      Registrace proběhla úspěšně!
     </div>
 
     {% elif message == "regerror" %}
     <div class="alert alert-danger alert-dismissible fade show js-alert" id="error-alert" role="alert">
-      <button type="button" class="close" data-dismiss="alert">x</button>
-      <strong>Registrace se nezdařila!</strong>
+      Registrace se nezdařila!
     </div>
 
     {% elif message == "logout" %}
     <div class="alert alert-primary alert-dismissible fade show js-alert" id="success-alert" role="alert">
-      <button type="button" class="close" data-dismiss="alert">x</button>
-      <strong>Úspěšně odhlášení!</strong>
+      Úspěšně odhlášení!
     </div>
 
     {% endif %} {% endfor %} {% endif %} {% endwith %}
