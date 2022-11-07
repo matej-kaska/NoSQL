@@ -9,7 +9,16 @@
     {% for lidi in finalLidi %}
     <div>
         <td><h2> <hr class="featurette-divider">{{ lidi[0] }}</a></h2>
-            <h3>{{ lidi[1] }}</h3>
+          {% if lidi[2] != "" %}
+          <p>pracoviště: {{ lidi[2] }}</p>
+          {% endif %}
+          {% if lidi[3] != "" %}
+          <p>telefon: {{ lidi[3] }}</p>
+          {% endif %}
+          {% if lidi[4] != "" %}
+          <p>e-mail: {{ lidi[4] }}</p>
+          {% endif %}  
+          <h3>{{ lidi[1] }}</h3>
         </td>
     </div>
     {% endfor %}

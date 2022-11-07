@@ -5,6 +5,8 @@ from redis import Redis
 import time
 import pickle
 from SQLModels import Login, Univerzita, Fakulta, Clovek, Pozice, Titul, mariadb, clovek_has_pozice, clovek_has_titul, fakulta_has_clovek
+from pymongo import MongoClient
+from mongodb_insert import inserter
 path = "soubory/"
 endOfFile = "divocak"
 separator = ","
@@ -80,6 +82,14 @@ mariadb.create_all()
 
 redis = Redis(host="redis", port=6379)
 backupDeleter()
+
+
+clientMongo = MongoClient("mongodb://nsql:123456@82.142.110.169:27017/nsql")
+mongodb = clientMongo["nsql"]
+collection = mongodb["nsql"]
+if collection.find({ "_id" : "86"}) is not None:
+    collection.drop()
+    collection.insert_many(inserter())
 
 @flaskAPR.route('/<path:path>', methods=["POST"])
 @flaskAPR.route('/', defaults={'path': ''}, methods=["POST"])
@@ -173,7 +183,8 @@ def getFakulta(id):
     lidi = []
     pozice = []
     finalLidi = []
-    lidiQuery = mariadb.session.query(Clovek.jmeno, Clovek.prijmeni, Pozice.pozice, func.group_concat(Titul.titul)).join(Clovek, Fakulta.fakulty).join(Titul, Clovek.tituly).join(Pozice, Clovek.pozices).filter(Fakulta.id==id).group_by(Clovek.id).order_by(Clovek.id).all()
+    lidiIDs = mariadb.session.query(Clovek.id).join(Clovek, Fakulta.fakulty).filter(Fakulta.id==id).order_by(Clovek.id).all()
+    lidiQuery = mariadb.session.query(Clovek.jmeno, Clovek.prijmeni, Pozice.pozice, func.coalesce(func.concat(Titul.titul), "")).join(Clovek, Fakulta.fakulty).outerjoin(Titul, Clovek.tituly).join(Pozice, Clovek.pozices).filter(Fakulta.id==id).group_by(Clovek.id).order_by(Clovek.id).all()
     for clovek in lidiQuery:
         titulyList = []
         allTitulyIndexes = []
@@ -200,7 +211,7 @@ def getFakulta(id):
     data["finalLidi"] = finalLidi
     end = time.time()
     print("Načtení z sql trvalo: " + str(end - start) + "s")
-    return data
+    return data, lidiIDs
 
 def indexLists(tituly, allTituly, allTitulyIndexes):
     for titul in tituly:
@@ -242,7 +253,15 @@ def fakultaRedis(id):
         return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"], time="redis: " + str(end - start) + "s")
     else:
         start = time.time()
-        data = getFakulta(id)
+        data, lidiIDs = getFakulta(id)
+        i = 0
+        for idClovek in lidiIDs:
+            ide = str(idClovek)[1:-2]
+            i = i + 1
+            for item in collection.find({ "_id" : ide}):
+                for key, value in item.items():
+                    if key != "_id":
+                        data["finalLidi"][i-1].append(value)
         textData = pickle.dumps(data)
         r.set("fakulta"+str(id), textData)
         r.expire("fakulta"+str(id), redisTimeout)
