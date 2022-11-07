@@ -11,30 +11,28 @@ id="Text"
 style="padding-left: 15%; padding-right: 15%"
 >
   {% if redis %}
-  {% for key, value in redis.items() %}
-  {{ key }}
-  <br>
-  {{ value }}
-  <br>
-  <br>
-  {% endfor %}
-  {% endif %}
-
+  {% for seznam in redis %}
+  {% for key, value in seznam.items() %}
   <table
   class="table table-hover table-bordered bg-dark"
   style= "color: white;"
   >
-  <thead>
-    <th style="writing-mode: vertical-rl; text-orientation: upright;">čauky</th>
-    <th>{{ redis }}</th>
-  </thead>
-
+  <td rowspan="0" style="text-align: center; vertical-align: middle;">{{ key }}</td>
+  {% if value is not string %}
+  {% for values in value %}
   <tr>
-    <td> cs</td>
-    <td> cs</td>
+        <td>{{ values }}</td>
   </tr>
-
+  {% endfor %}
+  {% else %}
+  <tr>
+    <td>{{ value }}</td>
+  </tr>
+  {% endif %}
   </table>
+  {% endfor %}
+  {% endfor %}
+  {% endif %}
 </section>
 
 {% endblock %}
