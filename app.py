@@ -57,7 +57,12 @@ def addToDB(nazev, nadpis, text):
                     separator + nadpis + separator + text)
     db.append([id, nazev, nadpis, text])
 
-
+#temporary deleter
+def backupDeleter(r):
+    backups = []
+    backups = r.keys()
+    for backup in backups:
+        r.delete(backup)
 
 flaskAPR = Flask(__name__)
 flaskAPR.app_context().push()
@@ -70,6 +75,7 @@ mariadb.init_app(flaskAPR)
 mariadb.create_all()
 
 redis = Redis(host="redis", port=6379)
+backupDeleter(r)
 
 @flaskAPR.route('/<path:path>', methods=["POST"])
 @flaskAPR.route('/', defaults={'path': ''}, methods=["POST"])
