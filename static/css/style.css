@@ -117,3 +117,8 @@ section {
     color: white;
 }
 
+.alert {
+    position: absolute;
+    width: 100%;
+}
+
