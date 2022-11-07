@@ -5,18 +5,36 @@
   </header>
 </article>
 
-<section class="section"
+<section
+class="section position-center"
 id="Text"
-style="padding-left: 17.5%; padding-right: 17.5%; text-align: center; color: white">
-{% if redis %}
-{% for key, value in redis.items() %}
-{{ key }}
-<br>
-{{ value }}
-<br>
-<br>
-{% endfor %}
-{% endif %}
+style="padding-left: 15%; padding-right: 15%"
+>
+  {% if redis %}
+  {% for key, value in redis.items() %}
+  {{ key }}
+  <br>
+  {{ value }}
+  <br>
+  <br>
+  {% endfor %}
+  {% endif %}
+
+  <table
+  class="table table-hover table-bordered bg-dark"
+  style= "color: white;"
+  >
+  <thead>
+    <th style="writing-mode: vertical-rl; text-orientation: upright;">čauky</th>
+    <th>{{ redis }}</th>
+  </thead>
+
+  <tr>
+    <td> cs</td>
+    <td> cs</td>
+  </tr>
+
+  </table>
 </section>
 
- {% endblock %}
+{% endblock %}
