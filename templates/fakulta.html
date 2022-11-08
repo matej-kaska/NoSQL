@@ -9,11 +9,11 @@
   {% for lidi in finalLidi %}
     <div>
       <hr class="featurette-divider">
-        <a role="button" class="collapsed" data-toggle="collapse" href="#infoLidi" aria-expanded="false" aria-controls="infoLidi" style="text-decoration: none">
+        <a role="button" class="collapsed" data-toggle="collapse" href="{{ "#infoLidi" + finalLidi.index(lidi)|string }}" aria-expanded="false" aria-controls="infoLidi" style="text-decoration: none">
           <h2>{{ lidi[0] }}</h2>
         </a>
 
-        <div class="collapse" id="infoLidi" aria-expanded="false">
+        <div class="collapse" id="{{ "infoLidi" + finalLidi.index(lidi)|string }}" aria-expanded="false">
           {% if lidi[2] != "" %}
           <p>pracoviště: {{ lidi[2] }}</p>
           {% endif %}
