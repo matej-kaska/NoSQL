@@ -12,12 +12,13 @@ style="padding-left: 15%; padding-right: 15%"
 >
   {% if redis %}
   {% for seznam in redis %}
+  <table class="table table-hover table-bordered bg-dark" style= "color: white;">
   {% for key, value in seznam.items() %}
-  <table
-  class="table table-hover table-bordered bg-dark"
-  style= "color: white;"
-  >
-  <td rowspan="0" style="text-align: center; vertical-align: middle;">{{ key }}</td>
+  {% set x=2 %}
+  {% if key == "fakultyList" or key == "finalLidi" %}
+  {% set x=0 %}
+  {% endif %}
+  <td rowspan={{ x }} style="text-align: center; vertical-align: middle;">{{ key }}</td>
   {% if value is not string %}
   {% for values in value %}
   <tr>
@@ -29,8 +30,8 @@ style="padding-left: 15%; padding-right: 15%"
     <td>{{ value }}</td>
   </tr>
   {% endif %}
-  </table>
   {% endfor %}
+  </table>
   {% endfor %}
   {% endif %}
 </section>

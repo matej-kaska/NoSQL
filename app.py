@@ -83,11 +83,10 @@ mariadb.create_all()
 redis = Redis(host="redis", port=6379)
 backupDeleter()
 
-
 clientMongo = MongoClient("mongodb://nsql:123456@82.142.110.169:27017/nsql")
 mongodb = clientMongo["nsql"]
 collection = mongodb["nsql"]
-if collection.find({ "_id" : "86"}) is not None:
+if collection.find({ "_id" : "86"}) is None:
     collection.drop()
     collection.insert_many(inserter())
 
@@ -267,16 +266,28 @@ def fakultaRedis(id):
         r.expire("fakulta"+str(id), redisTimeout)
         print("been saved to redis")
         end = time.time()
-        print("uložení do redisu z sql trvalo: " + str(end - start) + "s")
-        return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"], time="sql: " + str(end - start) + "s")
+        print("uložení do redisu z sql+mongo trvalo: " + str(end - start) + "s")
+        return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"], time="sql+mongo: " + str(end - start) + "s")
 
 @flaskAPR.route("/redis")
 def redisTable():
+    start = time.time()
     data = []
     keys = r.scan_iter()
     for key in keys:
         data.append(pickle.loads(r.get(key)))
-    return render_template("redis.html", redis=data)
+    end = time.time()
+    return render_template("redis.html", redis=data, time="redis: " + str(end - start) + "s")
+
+@flaskAPR.route("/mongo")
+def mongoTable():
+    start = time.time()
+    data = []
+    col = collection.find({})
+    for item in col:
+        data.append(item)
+    end = time.time()
+    return render_template("mongo.html", mongo=data, time="mongo: " + str(end - start) + "s")
 
 if __name__ == "__main__":
     loadDB()

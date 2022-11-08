@@ -119,30 +119,36 @@
       <nav>
         <div class="container" style="padding-top: 3%;">
           <div class="row text-center">
-          <div class="col-lg-3">
+          <div class="col-lg">
               <img class="rounded-circle" src="{{url_for('static', filename='resources/ujep-logo.png')}}" alt="Generic placeholder image" width="140" height="140">
               <h2 style="position: center;">UJEP</h2>
               <p><a class="btn btn-secondary" href="/univerzita" role="button">Přejít &raquo;</a></p>
           </div>
 
-          <div class="col-lg-3">
+          <div class="col-lg">
               <img class="rounded-circle" src="{{url_for('static', filename='resources/local-logo.png')}}" alt="Generic placeholder image" width="140" height="140">
               <h2>Local</h2>
               <p><a class="btn btn-secondary" href="/localdb" role="button">Přejít &raquo;</a></p>
           </div>
 
-          <div class="col-lg-3">
+          <div class="col-lg">
               <img class="rounded-circle" src="{{url_for('static', filename='resources/sql-logo.png')}}" alt="Generic placeholder image" width="140" height="140">
               <h2>SQL</h2>
               <p><a class="btn btn-secondary" href="/sql" role="button">Přejít &raquo;</a></p>
           </div>
 
-          <div class="col-lg-3">
+          <div class="col-lg">
               <img class="rounded-circle" src="{{url_for('static', filename='resources/redis-logo.png')}}" alt="Generic placeholder image" width="140" height="140">
               <h2>Redis</h2>
               <p><a class="btn btn-secondary" href="/redis" role="button">Přejít &raquo;</a></p>
           </div>
-      </div>
+
+          <div class="col-lg">
+            <img class="rounded-circle" src="{{url_for('static', filename='resources/mongodb-logo.png')}}" alt="Generic placeholder image" width="140" height="140">
+            <h2>Mongo</h2>
+            <p><a class="btn btn-secondary" href="/mongo" role="button">Přejít &raquo;</a></p>
+          </div>
+        </div>
       </nav>
     </div>
   </nav>
@@ -172,7 +178,7 @@
 
     {% elif message == "logout" %}
     <div class="alert alert-primary alert-dismissible fade show js-alert" id="success-alert" role="alert">
-      Úspěšně odhlášení!
+      Úspěšně odhlášen!
     </div>
 
     {% endif %} {% endfor %} {% endif %} {% endwith %}

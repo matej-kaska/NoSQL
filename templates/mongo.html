@@ -1,0 +1,28 @@
+{% extends "sablona.html" %} {% block main %}
+<article>
+  <header class="header text-center" style="color: black; padding-top: 3%">
+    <h1><span>MongoDB</span></h1>
+  </header>
+</article>
+
+<section class="section position-center" id="Text" style="padding-left: 15%; padding-right: 15%">
+  {% if mongo %}
+  <table class="table table-hover table-bordered bg-dark" style= "color: white;">
+  {% set printedKeys = [] %}
+  {% for item in mongo %}
+  <thead>
+    {% if key not in printedKeys %}
+    {{ printedKeys.append(key) or "" }}
+    {% for key in item.keys() %}
+    <th>{{ key }}</th>
+    {% endfor %}
+    {% endif %}
+  </thead>
+  {% for value in item.values() %}
+  <td>{{ value }}</td>
+  {% endfor %}
+  {% endfor %}
+  </table>
+  {% endif %}
+</section>
+{% endblock %}
