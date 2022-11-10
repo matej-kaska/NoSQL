@@ -86,9 +86,8 @@ backupDeleter()
 clientMongo = MongoClient("mongodb://nsql:123456@82.142.110.169:27017/nsql")
 mongodb = clientMongo["nsql"]
 collection = mongodb["nsql"]
-if collection.find({ "_id" : "86"}) is None:
-    collection.drop()
-    collection.insert_many(inserter())
+collection.drop()
+collection.insert_many(inserter())
 
 @flaskAPR.route('/<path:path>', methods=["POST"])
 @flaskAPR.route('/', defaults={'path': ''}, methods=["POST"])
