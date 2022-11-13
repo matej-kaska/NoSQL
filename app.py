@@ -1,19 +1,19 @@
+from SQLModels import Login, Univerzita, Fakulta, Clovek, Pozice, Titul, mariadb
+from mongodb_insert import inserter
 from flask import Flask, render_template, request, session, flash, redirect
 from sqlalchemy import func
-from os import listdir
 from redis import Redis
+from pymongo import MongoClient
 import time
 import pickle
-from SQLModels import Login, Univerzita, Fakulta, Clovek, Pozice, Titul, mariadb, clovek_has_pozice, clovek_has_titul, fakulta_has_clovek
-from pymongo import MongoClient
-from mongodb_insert import inserter
+from os import listdir
+import json
+import sys
 path = "soubory/"
 endOfFile = "divocak"
 separator = ","
 
 db = []
-r = Redis(host="82.142.110.169", port=6379)
-redisTimeout = 60 # sec
 
 
 def getLineInFile(path):
@@ -59,7 +59,7 @@ def addToDB(nazev, nadpis, text):
                     separator + nadpis + separator + text)
     db.append([id, nazev, nadpis, text])
 
-#temporary deleter
+
 def backupDeleter():
     backups = []
     backups = r.keys()
@@ -70,20 +70,28 @@ def backupDeleter():
     if i > 0:
         print("Bylo smazáno " + str(i) + " redis backupů!")
 
+try:
+    loginJson = open("login.json")
+except:
+    print("Chybí soubor login.json! :--(")
+    sys.exit()
+logins = json.load(loginJson)
+
 flaskAPR = Flask(__name__)
 flaskAPR.app_context().push()
-flaskAPR.secret_key = "a0X98Bs5Njv%^aJNO43M8rE!E3yAomIM"
-flaskAPR.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb+mariadbconnector://nsql:123456@82.142.110.169:3306/nsql'
+flaskAPR.secret_key = logins["secretkey"]
+flaskAPR.config['SQLALCHEMY_DATABASE_URI'] = logins["sql-login"]
 flaskAPR.config['SQLALCHEMY_BINDS'] = {
-    'mariadbUjep': 'mariadb+mariadbconnector://nsql:123456@82.142.110.169:3306/nsql-ujep'
+    'mariadbUjep': logins["sql-ujep"]
 }
 mariadb.init_app(flaskAPR)
 mariadb.create_all()
 
-redis = Redis(host="redis", port=6379)
+r = Redis(host="82.142.110.169", port=6379)
+redisTimeout = 60
 backupDeleter()
 
-clientMongo = MongoClient("mongodb://nsql:123456@82.142.110.169:27017/nsql")
+clientMongo = MongoClient(logins["mongo"])
 mongodb = clientMongo["nsql"]
 collection = mongodb["nsql"]
 collection.drop()
