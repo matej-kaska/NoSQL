@@ -73,7 +73,7 @@ def backupDeleter():
 try:
     loginJson = open("login.json")
 except:
-    print("Chybí soubor login.json! :--(")
+    print("Chybí soubor login.json! :---(")
     sys.exit()
 logins = json.load(loginJson)
 
