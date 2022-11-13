@@ -3,4 +3,4 @@
     "sql-login": "mariadb+mariadbconnector://nsql:123456@82.142.110.169:3306/nsql",
     "sql-ujep": "mariadb+mariadbconnector://nsql:123456@82.142.110.169:3306/nsql-ujep",
     "mongo": "mongodb://nsql:123456@82.142.110.169:27017/nsql"
-}s
+}
