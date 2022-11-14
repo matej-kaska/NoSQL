@@ -88,7 +88,7 @@ mariadb.init_app(flaskAPR)
 mariadb.create_all()
 
 r = Redis(host="82.142.110.169", port=6379)
-redisTimeout = 60
+redisTimeout = 1
 backupDeleter()
 
 clientMongo = MongoClient(logins["mongo"])
@@ -268,6 +268,11 @@ def fakultaRedis(id):
                 for key, value in item.items():
                     if key != "_id":
                         data["finalLidi"][i-1].append(value)
+        for clovek in data["finalLidi"]:
+            if len(clovek) <= 2:
+                clovek.append("")
+                clovek.append("")
+                clovek.append("")
         textData = pickle.dumps(data)
         r.set("fakulta"+str(id), textData)
         r.expire("fakulta"+str(id), redisTimeout)
@@ -286,8 +291,32 @@ def redisTable():
     end = time.time()
     return render_template("redis.html", redis=data, time="redis: " + str(end - start) + "s")
 
-@flaskAPR.route("/mongo")
+@flaskAPR.route("/mongo", methods=["GET", "POST"])
 def mongoTable():
+    if request.method == "GET":
+        return loadMongo()
+    elif request.method == "POST":
+        if request.form["btn"][0:3] == "rem":
+            id = request.form["btn"][3:5]
+            collection.delete_one( { "_id": id} )
+        elif request.form["btn"][0:3] == "upd":
+            id = request.form["btn"][3:5]
+            pracoviste = request.form[id + "pracoviste"]
+            telefon = request.form[id + "telefon"]
+            email = request.form[id + "email"]
+            collection.update_one({ "_id": id }, {"$set": {"pracoviste": pracoviste, "telefon": telefon, "email": email}})
+        elif request.form["btn"] == "create":
+            id = request.form["createid"]
+            pracoviste = request.form["createpra"]
+            telefon = request.form["createtel"]
+            email = request.form["createema"]
+            for item in collection.find({"_id": id}):
+                flash("invalidid")
+                return loadMongo()
+            collection.insert_one({"_id": id, "pracoviste": pracoviste, "telefon": telefon, "email": email})
+        return loadMongo()
+
+def loadMongo():
     start = time.time()
     data = []
     col = collection.find({})
@@ -295,6 +324,8 @@ def mongoTable():
         data.append(item)
     end = time.time()
     return render_template("mongo.html", mongo=data, time="mongo: " + str(end - start) + "s")
+        
+
 
 if __name__ == "__main__":
     loadDB()

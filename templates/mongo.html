@@ -4,9 +4,66 @@
     <h1><span>MongoDB</span></h1>
   </header>
 </article>
-
-<section class="section position-center" id="Text" style="padding-left: 15%; padding-right: 15%">
+<form method="post">
+  <section class="section position-center" id="Text" style="padding-left: 15%; padding-right: 15%">
+  {% set idstore = [] %}
   {% if mongo %}
+  <table class="table table-hover table-bordered bg-dark" style= "color: white;">
+    <thead>
+      <th>
+        _id
+      </th>
+      <th>
+        pracoviste
+      </th>
+      <th>
+        telefon
+      </th>
+      <th>
+        email
+      </th>
+    </thead>
+    <th>
+      <input
+          type="text"
+          class="form-control"
+          name="createid"
+        />
+    </th>
+    <th>
+      <input
+          type="text"
+          class="form-control"
+          name="createpra"
+        />
+    </th>
+    <th>
+      <input
+          type="text"
+          class="form-control"
+          name="createtel"
+        />
+    </th>
+    <th>
+      <input
+          type="text"
+          class="form-control"
+          name="createema"
+        />
+    </th>
+    <th>
+      <button
+      class="btn btn-success"
+      type="submit"
+      name="btn"
+      value="create"
+      style="color: black"
+    >
+    Create
+    </button>
+    </th>
+    
+  </table>
   <table class="table table-hover table-bordered bg-dark" style= "color: white;">
   {% set printedKeys = [] %}
   {% for item in mongo %}
@@ -18,11 +75,57 @@
     {% endfor %}
     {% endif %}
   </thead>
-  {% for value in item.values() %}
-  <td>{{ value }}</td>
+
+  {% for key, value in item.items() %}
+  {% set id = idstore[-1] %}
+  {% if key == "_id" %}
+  {% set id = value %}
+  {{ idstore.append(id) or "" }} 
+  {% endif %}
+  
+  <td>{{ value }}
+    {% if key != "_id" %}
+      <input
+          type="text"
+          class="form-control"
+          name="{{ id + key }}"
+          value="{{ value }}"
+        />
+    {% endif %}
+  </td>
   {% endfor %}
+  <td>
+      <button
+      class="btn btn-danger"
+      type="submit"
+      name="btn"
+      value="rem{{ idstore[-1] }}"
+      style="color: black"
+    >
+    Remove
+  </button>
+  <button
+    class="btn btn-primary"
+    type="submit"
+    name="btn"
+    value="edt{{ idstore[-1] }}"
+    style="color: black"
+  >
+    Edit
+  </button>
+  <button
+  class="btn btn-primary"
+  type="submit"
+  name="btn"
+  value="upd{{ idstore[-1] }}"
+  style="color: black"
+>
+  Update
+</button>
+    </form></td>
   {% endfor %}
   </table>
   {% endif %}
 </section>
+
 {% endblock %}
