@@ -83,7 +83,7 @@
   {{ idstore.append(id) or "" }} 
   {% endif %}
   
-  <td>{{ value }}
+  <td id="{{ id + key + 'text'}}">{{ value }}
     {% if key != "_id" %}
       <input
           type="text"
