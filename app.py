@@ -299,12 +299,14 @@ def mongoTable():
         if request.form["btn"][0:3] == "rem":
             id = request.form["btn"][3:5]
             collection.delete_one( { "_id": id} )
+            return loadMongo()
         elif request.form["btn"][0:3] == "upd":
             id = request.form["btn"][3:5]
             pracoviste = request.form[id + "pracoviste"]
             telefon = request.form[id + "telefon"]
             email = request.form[id + "email"]
             collection.update_one({ "_id": id }, {"$set": {"pracoviste": pracoviste, "telefon": telefon, "email": email}})
+            return loadMongo()
         elif request.form["btn"] == "create":
             id = request.form["createid"]
             pracoviste = request.form["createpra"]
@@ -314,7 +316,11 @@ def mongoTable():
                 flash("invalidid")
                 return loadMongo()
             collection.insert_one({"_id": id, "pracoviste": pracoviste, "telefon": telefon, "email": email})
-        return loadMongo()
+            return loadMongo()
+        elif request.form["btn"][0:3] == "edt":
+            print("ajtakrajta")
+            pass
+        
 
 def loadMongo():
     start = time.time()

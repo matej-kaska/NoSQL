@@ -83,15 +83,30 @@
   {{ idstore.append(id) or "" }} 
   {% endif %}
   
-  <td id="{{ id + key + 'text'}}">{{ value }}
+  <td><div id="{{ id }}{{ key }}text" >
+    {{ value }}
+  </div>
     {% if key != "_id" %}
       <input
+          name="{{ id + key }}"
+          id="{{ id }}{{ key }}"
           type="text"
           class="form-control"
-          name="{{ id + key }}"
           value="{{ value }}"
         />
     {% endif %}
+    <script>
+      function edit(ide) {
+        document.getElementById(ide + 'pracoviste').style.display = "block"; 
+        document.getElementById(ide + 'telefon').style.display = "block"; 
+        document.getElementById(ide + 'email').style.display = "block"; 
+        document.getElementById(ide + 'edt').style.display = "none";
+        document.getElementById(ide + 'upd').style.display = "block";
+        document.getElementById(ide + 'pracovistetext').style.display = "none"; 
+        document.getElementById(ide + 'telefontext').style.display = "none"; 
+        document.getElementById(ide + 'emailtext').style.display = "none"; 
+      }
+    </script>
   </td>
   {% endfor %}
   <td>
@@ -104,12 +119,14 @@
     >
     Remove
   </button>
-  <button
+    <button
     class="btn btn-primary"
-    type="submit"
     name="btn"
+    type="button"
+    id = "{{ idstore[-1] }}edt"
     value="edt{{ idstore[-1] }}"
     style="color: black"
+    onclick="edit({{ idstore[-1] }})"
   >
     Edit
   </button>
@@ -117,6 +134,7 @@
   class="btn btn-primary"
   type="submit"
   name="btn"
+  id = "{{ idstore[-1] }}upd"
   value="upd{{ idstore[-1] }}"
   style="color: black"
 >
