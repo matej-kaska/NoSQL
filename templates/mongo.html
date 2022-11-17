@@ -93,20 +93,10 @@
           type="text"
           class="form-control"
           value="{{ value }}"
+          style="display: none"
         />
     {% endif %}
-    <script>
-      function edit(ide) {
-        document.getElementById(ide + 'pracoviste').style.display = "block"; 
-        document.getElementById(ide + 'telefon').style.display = "block"; 
-        document.getElementById(ide + 'email').style.display = "block"; 
-        document.getElementById(ide + 'edt').style.display = "none";
-        document.getElementById(ide + 'upd').style.display = "block";
-        document.getElementById(ide + 'pracovistetext').style.display = "none"; 
-        document.getElementById(ide + 'telefontext').style.display = "none"; 
-        document.getElementById(ide + 'emailtext').style.display = "none"; 
-      }
-    </script>
+
   </td>
   {% endfor %}
   <td>
@@ -114,6 +104,7 @@
       class="btn btn-danger"
       type="submit"
       name="btn"
+      id = "{{ idstore[-1] }}rem"
       value="rem{{ idstore[-1] }}"
       style="color: black"
     >
@@ -130,20 +121,24 @@
   >
     Edit
   </button>
+
   <button
-  class="btn btn-primary"
+  class="btn btn-warning"
   type="submit"
   name="btn"
   id = "{{ idstore[-1] }}upd"
   value="upd{{ idstore[-1] }}"
-  style="color: black"
+  style="color: black; visibility: hidden"
 >
   Update
 </button>
+
     </form></td>
   {% endfor %}
   </table>
   {% endif %}
 </section>
+
+<script src="{{url_for('static', filename='crud_hide.js')}}"></script>
 
 {% endblock %}
