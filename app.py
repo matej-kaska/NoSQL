@@ -312,24 +312,23 @@ def mongoTable():
             pracoviste = request.form["createpra"]
             telefon = request.form["createtel"]
             email = request.form["createema"]
-            for item in collection.find({"_id": id}):
-                flash("invalidid")
+            for item in collection.find({"_id": str(int(id)-1)}):
+                collection.insert_one({"_id": id, "pracoviste": pracoviste, "telefon": telefon, "email": email})
                 return loadMongo()
-            collection.insert_one({"_id": id, "pracoviste": pracoviste, "telefon": telefon, "email": email})
+            flash("invalidid")
             return loadMongo()
-        elif request.form["btn"][0:3] == "edt":
-            print("ajtakrajta")
-            pass
         
 
 def loadMongo():
     start = time.time()
     data = []
     col = collection.find({})
+    last = 0
     for item in col:
         data.append(item)
+        last = last + 1
     end = time.time()
-    return render_template("mongo.html", mongo=data, time="mongo: " + str(end - start) + "s")
+    return render_template("mongo.html", mongo=data, time="mongo: " + str(end - start) + "s", last=last + 1)
         
 
 
