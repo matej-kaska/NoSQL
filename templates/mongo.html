@@ -71,7 +71,7 @@
     {% if key not in printedKeys %}
     {{ printedKeys.append(key) or "" }}
     {% for key in item.keys() %}
-    <th>{{ key }}</th>
+    <th class="mongogrid{{key}}">{{ key }}</th>
     {% endfor %}
     {% endif %}
   </thead>
@@ -83,7 +83,7 @@
   {{ idstore.append(id) or "" }} 
   {% endif %}
   
-  <td><div id="{{ id }}{{ key }}text" >
+  <td class="mongogrid{{key}}"><div id="{{ id }}{{ key }}text" >
     {{ value }}
   </div>
     {% if key != "_id" %}

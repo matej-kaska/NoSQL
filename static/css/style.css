@@ -47,6 +47,7 @@ h2 {
 
 input[type="text"] {
     background-color: #333333;
+    color: white;
 }
 span.input-group-text {
     background-color: #333333;
@@ -112,6 +113,30 @@ section {
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
     color: white;
+}
+
+.mongogrid_id {
+    position: relative;
+    width: 60px;
+    height: 62px;
+}
+
+.mongogridpracoviste {
+    position: relative;
+    width: 200px;
+    height: 62px;
+}
+
+.mongogridtelefon {
+    position: relative;
+    width: 300px;
+    height: 62px;
+}
+
+.mongogridemail {
+    position: relative;
+    width: 300px;
+    height: 62px;
 }
 
 .alert {
