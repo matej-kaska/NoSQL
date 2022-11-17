@@ -110,6 +110,16 @@
     >
     Remove
   </button>
+  <button
+  class="btn btn-warning"
+  type="submit"
+  name="btn"
+  id = "{{ idstore[-1] }}upd"
+  value="upd{{ idstore[-1] }}"
+  style="display: none; color: black"
+>
+  Update
+</button>
     <button
     class="btn btn-primary"
     name="btn"
@@ -121,18 +131,6 @@
   >
     Edit
   </button>
-
-  <button
-  class="btn btn-warning"
-  type="submit"
-  name="btn"
-  id = "{{ idstore[-1] }}upd"
-  value="upd{{ idstore[-1] }}"
-  style="color: black; visibility: hidden"
->
-  Update
-</button>
-
     </form></td>
   {% endfor %}
   </table>
