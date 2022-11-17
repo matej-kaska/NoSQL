@@ -88,7 +88,7 @@ mariadb.init_app(flaskAPR)
 mariadb.create_all()
 
 r = Redis(host="82.142.110.169", port=6379)
-redisTimeout = 1
+redisTimeout = 60
 backupDeleter()
 
 clientMongo = MongoClient(logins["mongo"])
@@ -317,6 +317,7 @@ def mongoTable():
                 return loadMongo()
             flash("invalidid")
             return loadMongo()
+    return catchall(path)
         
 
 def loadMongo():
