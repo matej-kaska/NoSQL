@@ -72,7 +72,7 @@
     {% if key not in printedKeys %}
     {{ printedKeys.append(key) or "" }}
     {% for key in item.keys() %}
-    <th class="mongogrid{{key}}">{{ key }}</th>
+    <th class="mongogridhead{{key}}">{{ key }}</th>
     {% endfor %}
     {% endif %}
   </thead>
