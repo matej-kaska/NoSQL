@@ -312,7 +312,7 @@ def mongoTable():
             pracoviste = request.form["createpra"]
             telefon = request.form["createtel"]
             email = request.form["createema"]
-            for item in collection.find({"_id": str(int(id)-1)}):
+            if collection.find_one({"_id": str(id)}) == None:
                 collection.insert_one({"_id": id, "pracoviste": pracoviste, "telefon": telefon, "email": email})
                 return loadMongo()
             flash("invalidid")
@@ -324,12 +324,16 @@ def loadMongo():
     start = time.time()
     data = []
     col = collection.find({})
-    last = 0
+    i = 0
     for item in col:
         data.append(item)
-        last = last + 1
+    while True:
+        i = i + 1
+        if collection.find_one({"_id": str(i)}) == None:
+            last = str(i)
+            break
     end = time.time()
-    return render_template("mongo.html", mongo=data, time="mongo: " + str(end - start) + "s", last=last + 1)
+    return render_template("mongo.html", mongo=data, time="mongo: " + str(end - start) + "s", last=last)
         
 
 
