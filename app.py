@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, session, flash, redirect
 from sqlalchemy import func
 from redis import Redis
 from pymongo import MongoClient
+from bson.code import Code
 import time
 import pickle
 from os import listdir
@@ -93,6 +94,8 @@ backupDeleter()
 
 clientMongo = MongoClient(logins["mongo"])
 mongodb = clientMongo["nsql"]
+emailResult = mongodb["emailResult"]
+pracoResult = mongodb["pracoResult"]
 collection = mongodb["nsql"]
 collection.drop()
 collection.insert_many(inserter())
@@ -332,10 +335,60 @@ def loadMongo():
         if collection.find_one({"_id": str(i)}) == None:
             last = str(i)
             break
+
+    #Email Map-Reduce
+    emailMap = Code(open('mongojs/emailMap.js', 'r').read())
+    emailReduce = Code(open('mongojs/emailReduce.js', 'r').read())
+    emailResult.drop()
+    mongodb.command({"mapReduce": "nsql", "map": emailMap, "reduce": emailReduce, "out": "emailResult" })
+    emailMapRed = {"ujep": 0, "seznam": 0, "numberOfDups": 0, "emailDups": []}
+    dups = 0
+    ujep = 0
+    seznam = 0
+    for value in emailResult.find({}):
+        for key, val in value.items():
+            if key == "_id":
+                id = val
+            elif key == "value":
+                for k, v in val.items():
+                    if k == "emailDups" and int(v) > 1:
+                        emailMapRed["emailDups"].append(id)
+                        dups = dups + 1
+                    elif k == "ujep" and v == True:
+                        ujep = ujep + 1
+                    elif k == "seznam" and v == True:
+                        seznam = seznam + 1
+
+    emailMapRed["numberOfDups"] = str(dups)
+    emailMapRed["ujep"] = str(ujep)
+    emailMapRed["seznam"] = str(seznam)
+
+    #Pracoviste Map-Reduce
+    pracoMap = Code(open('mongojs/pracoMap.js', 'r').read())
+    pracoReduce = Code(open('mongojs/pracoReduce.js', 'r').read())
+    pracoResult.drop()
+    mongodb.command({"mapReduce": "nsql", "map": pracoMap, "reduce": pracoReduce, "out": "pracoResult" })
+    pracoMapRedUnsorted = {}
+    pracoMapRed = {}
+    for item in pracoResult.find({}):
+        for key, val in item.items():
+            if key == "_id":
+                k = val
+            elif key == "value":
+                pracoMapRedUnsorted[k] = val
+    pracoMapRedAll = dict(sorted(pracoMapRedUnsorted.items(), key=lambda x:x[1], reverse=True))
+    pracoMapRedAll.pop('')
+    i = 0
+    for key, val in pracoMapRedAll.items():
+        if i < 3:
+            pracoMapRed[key] = val
+            i = i + 1
+    
+    print(emailMapRed)    
+    print(pracoMapRed)
+
     end = time.time()
     return render_template("mongo.html", mongo=data, time="mongo: " + str(end - start) + "s", last=last)
-        
-
 
 if __name__ == "__main__":
     loadDB()
