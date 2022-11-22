@@ -144,14 +144,3 @@ section {
     width: 100%;
 }
 
-
-/* OBRÁZKY V NAVBARU */
-.zoom {
-    transition: transform .2s; /* Animation */
-  }
-  
-.zoom:hover {
-    border-radius: 50%;
-    background-color: #fff;
-}
-
