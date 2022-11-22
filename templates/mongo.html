@@ -139,26 +139,42 @@
 
   <table class="table table-hover table-bordered bg-dark" style= "color: white;">
     <tr>
-      <th scope="row">Počet emailů s @ujep.cz</th>
-      <td>{{ujep}}</td>
+      <th scope="row">Počet unikátních emailů s @ujep.cz</th>
+      {% for key, value in emailMapRed.items() %}
+      {% if key == "ujep" %}
+      <td>{{value}}</td>
+      {% endif %}
+      {% endfor %}
     </tr>
     <tr>
-      <th scope="row">Počet emailů s @seznam.cz</th>
-      <td>{{seznam}}</td>
-    </tr>
-    <tr>
-      <th scope="row">Počet duplicitních emailů</th>
-      <td>{{emailDups}}</td>
+      <th scope="row">Počet unikátních emailů s @seznam.cz</th>
+      {% for key, value in emailMapRed.items() %}
+      {% if key == "seznam" %}
+      <td>{{value}}</td>
+      {% endif %}
+      {% endfor %}
     </tr>
     <tr>
       <th scope="row">Počet duplicitních lidí</th>
-      <td>{{dups}}</td>
+      {% for key, value in emailMapRed.items() %}
+      {% if key == "numberOfDups" %}
+      <td>{{value}}</td>
+      {% endif %}
+      {% endfor %}
     </tr>
     <tr>
-      <th scope="row" style="text-align: justify-center">Nejvytíženější pracoviště</th>
+      <th scope="row">Duplicitní lidi</th>
+      {% for key, value in emailMapRed.items() %}
+      {% if key == "emailDups" %}
+      <td>{{value}}</td>
+      {% endif %}
+      {% endfor %}
+    </tr>
+    <tr>
+      <th scope="row" style="text-align: center; vertical-align: middle;">Nejvytíženější pracoviště</th>
       <td>
         {% for key, value in pracoMapRed.items() %}
-        <p>prac. {{key}} = {{value}}<p>
+        <p>prac. {{key}} = {{value|int}}<p>
         {% endfor %}
       </td>
     </tr>

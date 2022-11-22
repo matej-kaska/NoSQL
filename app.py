@@ -362,7 +362,6 @@ def loadMongo():
     emailMapRed["numberOfDups"] = str(dups)
     emailMapRed["ujep"] = str(ujep)
     emailMapRed["seznam"] = str(seznam)
-    emailDups = emailMapRed["emailDups"].copy()
     
     #Pracoviste Map-Reduce
     pracoMap = Code(open('mongojs/pracoMap.js', 'r').read())
@@ -386,7 +385,7 @@ def loadMongo():
             i = i + 1
 
     end = time.time()
-    return render_template("mongo.html", mongo=data, dups = dups, ujep = ujep, seznam = seznam, emailDups = len(emailDups), pracoMapRed = pracoMapRed,time="mongo: " + str(end - start) + "s", last=last)
+    return render_template("mongo.html", mongo=data, emailMapRed=emailMapRed, pracoMapRed=pracoMapRed,time="mongo: " + str(end - start) + "s", last=last)
 
 if __name__ == "__main__":
     loadDB()
