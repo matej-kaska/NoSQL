@@ -387,6 +387,10 @@ def loadMongo():
     end = time.time()
     return render_template("mongo.html", mongo=data, emailMapRed=emailMapRed, pracoMapRed=pracoMapRed,time="mongo: " + str(end - start) + "s", last=last)
 
+@flaskAPR.route("/neo")
+def neo():
+    return render_template("neo.html")
+
 if __name__ == "__main__":
     loadDB()
     flaskAPR.run(debug=True, host="0.0.0.0")
