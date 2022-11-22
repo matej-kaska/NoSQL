@@ -384,14 +384,9 @@ def loadMongo():
         if i < 3:
             pracoMapRed[key] = val
             i = i + 1
-    
-    # pro Bublu
-    print(emailMapRed)    
-    print(pracoMapRed)
-    print(emailDups)
 
     end = time.time()
-    return render_template("mongo.html", mongo=data, dups = dups, ujep = ujep, seznam = seznam, emailDups = len(emailDups), time="mongo: " + str(end - start) + "s", last=last)
+    return render_template("mongo.html", mongo=data, dups = dups, ujep = ujep, seznam = seznam, emailDups = len(emailDups), pracoMapRed = pracoMapRed,time="mongo: " + str(end - start) + "s", last=last)
 
 if __name__ == "__main__":
     loadDB()

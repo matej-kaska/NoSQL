@@ -147,12 +147,20 @@
       <td>{{seznam}}</td>
     </tr>
     <tr>
+      <th scope="row">Počet duplicitních emailů</th>
+      <td>{{emailDups}}</td>
+    </tr>
+    <tr>
       <th scope="row">Počet duplicitních lidí</th>
       <td>{{dups}}</td>
     </tr>
     <tr>
-      <th scope="row">Počet duplicitních emailů</th>
-      <td>{{emailDups}}</td>
+      <th scope="row" style="text-align: justify-center">Nejvytíženější pracoviště</th>
+      <td>
+        {% for key, value in pracoMapRed.items() %}
+        <p>prac. {{key}} = {{value}}<p>
+        {% endfor %}
+      </td>
     </tr>
   </table>
 
