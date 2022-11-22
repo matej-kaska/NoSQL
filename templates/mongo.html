@@ -84,9 +84,10 @@
   {{ idstore.append(id) or "" }} 
   {% endif %}
   
-  <td class="mongogrid{{key}}"><div id="{{ id }}{{ key }}text" >
-    {{ value }}
-  </div>
+  <td class="mongogrid{{key}}">
+    <div id="{{ id }}{{ key }}text" >
+      {{ value }}
+    </div>
     {% if key != "_id" %}
       <input
           name="{{ id + key }}"
@@ -147,10 +148,10 @@
       {% endfor %}
     </tr>
     <tr>
-      <th scope="row">Počet unikátních emailů s @seznam.cz</th>
+      <th scope="row" style="text-align: center; vertical-align: middle;">Počet unikátních emailů s @seznam.cz</th>
       {% for key, value in emailMapRed.items() %}
       {% if key == "seznam" %}
-      <td>{{value}}</td>
+      <td style="text-align: center; vertical-align: middle;">{{value}}</td>
       {% endif %}
       {% endfor %}
     </tr>
@@ -163,19 +164,25 @@
       {% endfor %}
     </tr>
     <tr>
-      <th scope="row">Duplicitní lidi</th>
+      <th scope="row" style="text-align: center; vertical-align: middle;">Duplicitní lidé</th>
       {% for key, value in emailMapRed.items() %}
       {% if key == "emailDups" %}
-      <td>{{value}}</td>
+      <td>{{ value | join(", ") }}</td>
       {% endif %}
       {% endfor %}
     </tr>
     <tr>
       <th scope="row" style="text-align: center; vertical-align: middle;">Nejvytíženější pracoviště</th>
       <td>
-        {% for key, value in pracoMapRed.items() %}
-        <p>prac. {{key}} = {{value|int}}<p>
-        {% endfor %}
+        <div class="container">
+          <div class="row">
+            {% for key, value in pracoMapRed.items() %}
+            <div class="col-sm align-middle">
+              {{key}} = {{value|int}}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
       </td>
     </tr>
   </table>
