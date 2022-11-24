@@ -88,7 +88,7 @@ flaskAPR.config['SQLALCHEMY_BINDS'] = {
 mariadb.init_app(flaskAPR)
 mariadb.create_all()
 
-r = Redis(host="82.142.110.169", port=6379)
+r = Redis(host=logins["redis-ip"], port=6379)
 redisTimeout = 60
 backupDeleter()
 
