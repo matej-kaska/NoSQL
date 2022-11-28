@@ -211,7 +211,8 @@ def getFakulta(id):
                     titulyDone = titulyDone + " " + titul
             else:
                 jmeno = jmeno + ", " + titul
-        jmeno = titulyDone + " " + jmeno
+        if titulyDone != "":
+            jmeno = titulyDone + " " + jmeno
         lidi.append(jmeno)
     for i in range(len(lidi)):
         finalLidi.append([lidi[i], pozice[i]])
@@ -321,7 +322,7 @@ def mongoTable():
         elif request.form["btn"] == "refresh":
             collection.drop()
             collection.insert_many(inserter())
-            return render_template("mongo.html")
+            return loadMongo()
     return catchall(path)
         
 
