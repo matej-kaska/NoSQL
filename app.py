@@ -97,8 +97,6 @@ mongodb = clientMongo["nsql"]
 emailResult = mongodb["emailResult"]
 pracoResult = mongodb["pracoResult"]
 collection = mongodb["nsql"]
-collection.drop()
-collection.insert_many(inserter())
 
 @flaskAPR.route('/<path:path>', methods=["POST"])
 @flaskAPR.route('/', defaults={'path': ''}, methods=["POST"])
@@ -320,6 +318,10 @@ def mongoTable():
                 return loadMongo()
             flash("invalidid")
             return loadMongo()
+        elif request.form["btn"] == "refresh":
+            collection.drop()
+            collection.insert_many(inserter())
+            return render_template("mongo.html")
     return catchall(path)
         
 

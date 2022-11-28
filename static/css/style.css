@@ -144,3 +144,18 @@ section {
     width: 100%;
 }
 
+/* ANIMACE REFRESH */
+@keyframes rotate {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(360deg)}
+}
+    
+.refresh-start {
+    animation-name: rotate;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-play-state: paused;
+}
+    
+    
