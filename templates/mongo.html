@@ -22,6 +22,9 @@
       <th>
         email
       </th>
+      <th>
+        <button class="btn" type="submit" name="btn" value="refresh" id="refresh" onclick="refreshContent()" style="padding: 0; background: transparent; border: none;"><img id="refresh-icon" class="refresh-start" src="https://icons.veryicon.com/png/o/miscellaneous/basic-monochrome-icon/refresh-149.png" width=25 height=25 /></button> 
+      </th>
     </thead>
     <th>
       <input
@@ -190,6 +193,7 @@
 
 </section>
 
+<script src="{{url_for('static', filename='refresh_button.js')}}"></script>
 <script src="{{url_for('static', filename='crud_hide.js')}}"></script>
 
 {% endblock %}

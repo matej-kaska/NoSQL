@@ -97,8 +97,6 @@ mongodb = clientMongo["nsql"]
 emailResult = mongodb["emailResult"]
 pracoResult = mongodb["pracoResult"]
 collection = mongodb["nsql"]
-collection.drop()
-collection.insert_many(inserter())
 
 @flaskAPR.route('/<path:path>', methods=["POST"])
 @flaskAPR.route('/', defaults={'path': ''}, methods=["POST"])
@@ -213,7 +211,8 @@ def getFakulta(id):
                     titulyDone = titulyDone + " " + titul
             else:
                 jmeno = jmeno + ", " + titul
-        jmeno = titulyDone + " " + jmeno
+        if titulyDone != "":
+            jmeno = titulyDone + " " + jmeno
         lidi.append(jmeno)
     for i in range(len(lidi)):
         finalLidi.append([lidi[i], pozice[i]])
@@ -319,6 +318,10 @@ def mongoTable():
                 collection.insert_one({"_id": id, "pracoviste": pracoviste, "telefon": telefon, "email": email})
                 return loadMongo()
             flash("invalidid")
+            return loadMongo()
+        elif request.form["btn"] == "refresh":
+            collection.drop()
+            collection.insert_many(inserter())
             return loadMongo()
     return catchall(path)
         
