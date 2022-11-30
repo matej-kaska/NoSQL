@@ -427,7 +427,9 @@ def neo():
                 query = query + "workwith,"
             if query != "":
                 query = query[0:-1]
-    return render_template("neo.html", sett=sett, query=query)
+            return render_template("neo.html", sett=sett, query=query)
+    return catchall(path)
+    
 
 @flaskAPR.route("/neo/login.json", methods=["GET", "POST"])
 def neologin():
