@@ -1,4 +1,4 @@
-import myJson from './../login.json' assert {type: 'json'};
+import myJson from './../neo/login.json' assert {type: 'json'};
 
 let neoViz;
 
@@ -95,9 +95,9 @@ function draw() {
                 }
             },
         },
-        initialCypher: "MATCH (u:Univerzita)-[hasfak:HAS_FAKULTA]->(f:Fakulta)<-[iswor:IS_WORKING_AT]-(c:Clovek)-[iswork:IS_WORKING_IN]->(p:Pracoviste)<-[haswo:HAS_WORKPLACE]-(f:Fakulta) MATCH (c1:Clovek)-[workwith:IS_WORKING_WITH]->(c2:Clovek) RETURN *"
+        initialCypher: "MATCH (u:Univerzita)-[hasfak:HAS_FAKULTA]->(f:Fakulta)<-[iswor:IS_WORKING_AT]-(c:Clovek)-[iswork:IS_WORKING_IN]->(p:Pracoviste)<-[haswo:HAS_WORKPLACE]-(f:Fakulta) MATCH (c1:Clovek)-[workwith:IS_WORKING_WITH]->(c2:Clovek) RETURN " + q
     };
     neoViz = new NeoVis.default(config);
     neoViz.render();
 }
-window.onload = draw();
+window.onload = draw()

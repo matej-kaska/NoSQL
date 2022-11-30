@@ -66,8 +66,9 @@ def backupDeleter():
     backups = r.keys()
     i = 0
     for backup in backups:
-        r.delete(backup)
-        i = i + 1
+        if str(backup)[2:8] == "backup":
+            r.delete(backup)
+            i = i + 1
     if i > 0:
         print("Bylo smazáno " + str(i) + " redis backupů!")
 
@@ -191,14 +192,18 @@ def getFakulta(id):
     pozice = []
     finalLidi = []
     lidiIDs = mariadb.session.query(Clovek.id).join(Clovek, Fakulta.fakulty).filter(Fakulta.id==id).order_by(Clovek.id).all()
-    lidiQuery = mariadb.session.query(Clovek.jmeno, Clovek.prijmeni, Pozice.pozice, func.coalesce(func.concat(Titul.titul), "")).join(Clovek, Fakulta.fakulty).outerjoin(Titul, Clovek.tituly).join(Pozice, Clovek.pozices).filter(Fakulta.id==id).group_by(Clovek.id).order_by(Clovek.id).all()
+    lidiQuery = mariadb.session.query(Clovek.jmeno, Clovek.prijmeni, Pozice.pozice, func.group_concat(Titul.titul, "")).join(Clovek, Fakulta.fakulty).outerjoin(Titul, Clovek.tituly).join(Pozice, Clovek.pozices).filter(Fakulta.id==id).group_by(Clovek.id).order_by(Clovek.id).all()
     for clovek in lidiQuery:
+        print(clovek)
         titulyList = []
         allTitulyIndexes = []
         titulyDone = ""
         pozice.append(clovek[2])
         jmeno = str(clovek[0]) + " " + str(clovek[1])
-        tituly = clovek[3].split(',')
+        if clovek[3] != None:
+            tituly = clovek[3].split(',')
+        else:
+            tituly = ""
         allTitulyIndexes = indexLists(tituly, allTituly, allTitulyIndexes)
         zipTituly = sorted(zip(allTitulyIndexes, tituly))
         titulyList = [titul[1] for titul in zipTituly]
@@ -393,9 +398,36 @@ def loadMongo():
 
 @flaskAPR.route("/neo", methods=["GET", "POST"])
 def neo():
+    sett = ["uni","fak","prac","lidi","hasfak","haswork","workat","workin","workwith"]
+    query = "*"
     if request.method == "GET":
-        return render_template("neo.html")
-    return render_template("neo.html")
+        return render_template("neo.html", sett=sett, query=query)
+    elif request.method == "POST":
+        if request.form["btn"] == "match":
+            sett.clear()
+            sett = request.form.getlist("check")
+            query = ""
+            if "uni" in sett:
+                query = query + "u,"
+            if "fak" in sett:
+                query = query + "f,"
+            if "prac" in sett:
+                query = query + "p,"
+            if "lidi" in sett:
+                query = query + "c,"
+            if "hasfak" in sett:
+                query = query + "hasfak,"
+            if "haswork" in sett:
+                query = query + "haswo,"
+            if "workat" in sett:
+                query = query + "iswor,"
+            if "workin" in sett:
+                query = query + "iswork,"
+            if "workwith" in sett:
+                query = query + "workwith,"
+            if query != "":
+                query = query[0:-1]
+    return render_template("neo.html", sett=sett, query=query)
 
 @flaskAPR.route("/neo/login.json", methods=["GET", "POST"])
 def neologin():

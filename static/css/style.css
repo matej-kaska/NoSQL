@@ -158,4 +158,13 @@ section {
     animation-play-state: paused;
 }
     
-    
+/* NeoViz */
+#viz {
+    width: auto;
+    height: 800px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: #1c3ea9;
+    border-radius: 25px;
+    border: 2px solid #333333;
+}
