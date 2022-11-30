@@ -88,7 +88,7 @@ flaskAPR.config['SQLALCHEMY_BINDS'] = {
 mariadb.init_app(flaskAPR)
 mariadb.create_all()
 
-r = Redis(host=logins["redis-ip"], port=6379)
+r = Redis(host=logins["server-ip"], port=6379)
 redisTimeout = 60
 backupDeleter()
 
@@ -285,6 +285,7 @@ def fakultaRedis(id):
 
 @flaskAPR.route("/redis")
 def redisTable():
+    backupDeleter()
     start = time.time()
     data = []
     keys = r.scan_iter()
@@ -390,8 +391,16 @@ def loadMongo():
     end = time.time()
     return render_template("mongo.html", mongo=data, emailMapRed=emailMapRed, pracoMapRed=pracoMapRed,time="mongo: " + str(end - start) + "s", last=last)
 
-@flaskAPR.route("/neo")
+@flaskAPR.route("/neo", methods=["GET", "POST"])
 def neo():
+    if request.method == "GET":
+        return render_template("neo.html")
+    return render_template("neo.html")
+
+@flaskAPR.route("/neo/login.json", methods=["GET", "POST"])
+def neologin():
+    if request.method == "GET":
+        return logins
     return render_template("neo.html")
 
 if __name__ == "__main__":
