@@ -160,11 +160,10 @@ section {
     
 /* NeoViz */
 #viz {
-    width: auto;
     height: 800px;
-    margin-left: 20px;
-    margin-right: 20px;
-    background-color: #1c3ea9;
+    margin-left: 7.5vw;
+    margin-right: 7.5vw;
+    background-color: #333333a7;
     border-radius: 25px;
-    border: 2px solid #333333;
+    border: 2px solid #000000;
 }

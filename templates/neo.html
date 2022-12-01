@@ -7,56 +7,63 @@
 <section class="section position-center" id="Text" style="padding-left: 15%; padding-right: 15%">
   <form method="post">
     <div class="form-check">
+
       <div class="form-check form-check-inline">
         <input class="form-check-input" name="check" type="checkbox" value="uni" id="uni" {{ "checked" if "uni" in sett }}>
         <label class="form-check-label" for="uni">
           Univerzita
         </label>
       </div>
+
       <div class="form-check form-check-inline">
         <input class="form-check-input" name="check" type="checkbox" value="fak" id="fak" {{ "checked" if "fak" in sett }}>
         <label class="form-check-label" for="fak">
           Fakulty
         </label>
       </div>
+
       <div class="form-check form-check-inline">
         <input class="form-check-input" name="check" type="checkbox" value="prac" id="prac" {{ "checked" if "prac" in sett }}>
         <label class="form-check-label" for="prac">
           Pracoviště
         </label>
       </div>
+
       <div class="form-check form-check-inline">
         <input class="form-check-input" name="check" type="checkbox" value="lidi" id="lidi" {{ "checked" if "lidi" in sett }}>
         <label class="form-check-label" for="lidi">
           Lidi
         </label>
       </div>
-    </div>
-    <div class="form-check">
+
       <div class="form-check form-check-inline">
         <input class="form-check-input" name="check" type="checkbox" value="hasfak" id="hasfak" {{ "checked" if "hasfak" in sett }}>
         <label class="form-check-label" for="hasfak">
           HAS_FAKULTA
         </label>
       </div>
+
       <div class="form-check form-check-inline">
         <input class="form-check-input" name="check" type="checkbox" value="haswork" id="haswork" {{ "checked" if "haswork" in sett }}>
         <label class="form-check-label" for="haswork">
           HAS_WORKPLACE
         </label>
       </div>
+
       <div class="form-check form-check-inline">
         <input class="form-check-input" name="check" type="checkbox" value="workat" id="workat" {{ "checked" if "workat" in sett }}>
         <label class="form-check-label" for="workat">
           IS_WORKING_AT
         </label>
       </div>
+
       <div class="form-check form-check-inline">
         <input class="form-check-input" name="check" type="checkbox" value="workin" id="workin" {{ "checked" if "workin" in sett }}>
         <label class="form-check-label" for="workin">
           IS_WORKING_IN
         </label>
       </div>
+
       <div class="form-check form-check-inline">
         <input class="form-check-input" name="check" type="checkbox" value="workwith" id="workwith" {{ "checked" if "workwith" in sett }}>
         <label class="form-check-label" for="workwith">
@@ -64,7 +71,7 @@
         </label>
       </div>
     </div>
-  <button type="submit" name="btn" value="match" class="btn btn-primary">Match</button>
+    <button type="submit" name="btn" value="match" class="btn btn-primary">Match</button>
   </form>
 </section>
 <div id="viz"></div>
