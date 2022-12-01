@@ -90,7 +90,7 @@ mariadb.init_app(flaskAPR)
 mariadb.create_all()
 
 r = Redis(host=logins["server-ip"], port=6379)
-redisTimeout = 60
+redisTimeout = 1
 backupDeleter()
 
 clientMongo = MongoClient(logins["mongo"])
@@ -194,9 +194,9 @@ def getFakulta(id):
     lidiIDs = mariadb.session.query(Clovek.id).join(Clovek, Fakulta.fakulty).filter(Fakulta.id==id).order_by(Clovek.id).all()
     lidiQuery = mariadb.session.query(Clovek.jmeno, Clovek.prijmeni, Pozice.pozice, func.group_concat(Titul.titul, "")).join(Clovek, Fakulta.fakulty).outerjoin(Titul, Clovek.tituly).join(Pozice, Clovek.pozices).filter(Fakulta.id==id).group_by(Clovek.id).order_by(Clovek.id).all()
     for clovek in lidiQuery:
-        print(clovek)
         titulyList = []
         allTitulyIndexes = []
+        allTitulyIndexesF = []
         titulyDone = ""
         pozice.append(clovek[2])
         jmeno = str(clovek[0]) + " " + str(clovek[1])
@@ -204,10 +204,10 @@ def getFakulta(id):
             tituly = clovek[3].split(',')
         else:
             tituly = ""
-        allTitulyIndexes = indexLists(tituly, allTituly, allTitulyIndexes)
-        zipTituly = sorted(zip(allTitulyIndexes, tituly))
+        allTitulyIndexesF = indexLists(tituly, allTituly, allTitulyIndexesF)
+        zipTituly = sorted(zip(allTitulyIndexesF, tituly))
         titulyList = [titul[1] for titul in zipTituly]
-        allTitulyIndexes = indexLists(tituly, allTituly, allTitulyIndexes)
+        allTitulyIndexes = indexLists(titulyList, allTituly, allTitulyIndexes)
         for titul in titulyList:
             if allTitulyIndexes[titulyList.index(titul)] < 15:
                 if len(titulyDone) == 0:
