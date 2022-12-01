@@ -25,6 +25,12 @@ function draw() {
                 fakulta: {color:{border:'#2870c2', background:'#4C8EDA', highlight: {border: "#2870c2", background:"#3781d6"}}, shape:"circle", font:{color: "black", size:8, strokeWidth: 0}, size:6},
                 clovek: {color:{border:'#d7a013', background:'#FFC454', highlight: {border: "#d7a013", background:"#ffbb3b"}}, shape:"dot", font:{color: "black", size:8, strokeWidth: 2}, size:6},
                 pracoviste: {color:{border:'#eb2728', background:'#F16667', highlight: {border: "#eb2728", background:"#ef4f50"}}, shape:"circle", font:{color: "white", size:8, strokeWidth: 0}, size:6}
+            },
+            layout: {
+                clusterThreshold: 200
+            },
+            interaction: {
+                navigationButtons: true
             }
         },
         labels: {
@@ -32,8 +38,7 @@ function draw() {
                 label: "name",
                 [NeoVis.NEOVIS_ADVANCED_CONFIG]: {
                     static: {
-                        group: "univerzita"
-                        
+                        group: "univerzita",
                     }
                 }
             },
