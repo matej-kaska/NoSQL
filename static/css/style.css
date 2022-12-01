@@ -161,9 +161,68 @@ section {
 /* NeoViz */
 #viz {
     height: 800px;
-    margin-left: 7.5vw;
-    margin-right: 7.5vw;
+    margin-left: 11%;
+    margin-right: 11%;
     background-color: #333333a7;
     border-radius: 25px;
     border: 2px solid #000000;
+}
+
+
+/* CHECKBOXY*/
+input[type=checkbox] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-right: 8px;
+    position: relative;
+}
+
+input[type=checkbox]::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background-color: rgb(29, 173, 0);
+    transform: translate(8px, 13px) rotate(-45deg);
+    transform-origin: left;
+    transition: 150ms all linear;
+    transition-delay: 0ms;
+}
+
+input[type=checkbox]::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background-color: rgb(29, 173, 0);
+    transform: translate(1px, 8px) rotate(45deg);
+    transform-origin: left;
+    transition: 150ms all linear;
+    transition-delay: 150ms;
+}
+
+input[type=checkbox]:checked::before {
+    width: 14px;
+    transition-delay: 150ms;
+}
+
+input[type=checkbox]:checked::after {
+    width: 10px;
+    transition-delay: 0ms;
+}
+
+label {
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.collapse#collapseFiltry{
+    margin-top: 1%;
+    background-color: #333333a7;
+    border: 1px solid #000000;
+    border-radius: 25px;
 }
