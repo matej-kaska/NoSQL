@@ -72,6 +72,16 @@ def backupDeleter():
     if i > 0:
         print("Bylo smazáno " + str(i) + " redis backupů!")
 
+def mongoRefill():
+    collectionEmpty = True
+    for _ in collection.find({}):
+        collectionEmpty = False
+        break
+    if collectionEmpty:
+        print("MongoDB znovu doplněna o všechny hodnoty!")
+        collection.drop()
+        collection.insert_many(inserter())
+
 try:
     loginJson = open("login.json")
 except:
@@ -98,7 +108,7 @@ mongodb = clientMongo["nsql"]
 emailResult = mongodb["emailResult"]
 pracoResult = mongodb["pracoResult"]
 collection = mongodb["nsql"]
-
+mongoRefill()
 @flaskAPR.route('/<path:path>', methods=["POST"])
 @flaskAPR.route('/', defaults={'path': ''}, methods=["POST"])
 def catchall(path):
@@ -196,7 +206,6 @@ def getFakulta(id):
     for clovek in lidiQuery:
         titulyList = []
         allTitulyIndexes = []
-        allTitulyIndexesF = []
         titulyDone = ""
         pozice.append(clovek[2])
         jmeno = str(clovek[0]) + " " + str(clovek[1])
@@ -204,8 +213,8 @@ def getFakulta(id):
             tituly = clovek[3].split(',')
         else:
             tituly = ""
-        allTitulyIndexesF = indexLists(tituly, allTituly, allTitulyIndexesF)
-        zipTituly = sorted(zip(allTitulyIndexesF, tituly))
+        allTitulyIndexes = indexLists(tituly, allTituly, allTitulyIndexes)
+        zipTituly = sorted(zip(allTitulyIndexes, tituly))
         titulyList = [titul[1] for titul in zipTituly]
         allTitulyIndexes = indexLists(titulyList, allTituly, allTitulyIndexes)
         for titul in titulyList:
@@ -227,6 +236,7 @@ def getFakulta(id):
     return data, lidiIDs
 
 def indexLists(tituly, allTituly, allTitulyIndexes):
+    allTitulyIndexes.clear()
     for titul in tituly:
             for allTitul in allTituly:
                 if allTitul == titul:
