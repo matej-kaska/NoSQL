@@ -109,6 +109,7 @@ emailResult = mongodb["emailResult"]
 pracoResult = mongodb["pracoResult"]
 collection = mongodb["nsql"]
 mongoRefill()
+
 @flaskAPR.route('/<path:path>', methods=["POST"])
 @flaskAPR.route('/', defaults={'path': ''}, methods=["POST"])
 def catchall(path):
@@ -250,7 +251,7 @@ def univerzitaRedis():
         start = time.time()
         textData = r.get("univerzita")
         data = pickle.loads(textData)
-        print("loaded from redis")
+        print("Načteno z redisu!")
         end = time.time()
         return render_template("univerzita.html", uni=data["uni"], fakultyList=data["fakultyList"], time="redis: " + str(end - start) + "s")
     else:
@@ -259,9 +260,9 @@ def univerzitaRedis():
         textData = pickle.dumps(data)
         r.set("univerzita", textData)
         r.expire("univerzita", redisTimeout)
-        print("been saved to redis")
+        print("Uloženo do redisu!")
         end = time.time()
-        print("uložení do redisu z sql trvalo: " + str(end - start) + "s")
+        print("Uložení do redisu z sql trvalo: " + str(end - start) + "s")
         return render_template("univerzita.html", uni=data["uni"], fakultyList=data["fakultyList"], time="sql: " + str(end - start) + "s")
 
 @flaskAPR.route("/univerzita/<id>")
@@ -270,7 +271,6 @@ def fakultaRedis(id):
         start = time.time()
         textData = r.get("fakulta"+str(id))
         data = pickle.loads(textData)
-        print("loaded from redis")
         end = time.time()
         print("Načtení z redisu trvalo: " + str(end - start) + "s")
         return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"], time="redis: " + str(end - start) + "s")
@@ -293,9 +293,8 @@ def fakultaRedis(id):
         textData = pickle.dumps(data)
         r.set("fakulta"+str(id), textData)
         r.expire("fakulta"+str(id), redisTimeout)
-        print("been saved to redis")
         end = time.time()
-        print("uložení do redisu z sql+mongo trvalo: " + str(end - start) + "s")
+        print("Uložení do redisu z sql+mongo trvalo: " + str(end - start) + "s")
         return render_template("fakulta.html", fakult=data["fakult"], finalLidi=data["finalLidi"], time="sql+mongo: " + str(end - start) + "s")
 
 @flaskAPR.route("/redis")
