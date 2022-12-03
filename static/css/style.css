@@ -175,7 +175,7 @@ input[type=checkbox] {
     width: 20px;
     height: 20px;
     border-radius: 5px;
-    background-color: #fff;
+    background-color: #00000091;
     margin-right: 8px;
     position: relative;
 }
@@ -185,7 +185,7 @@ input[type=checkbox]::before {
     position: absolute;
     width: 0;
     height: 3px;
-    background-color: rgb(29, 173, 0);
+    background-color: #0275d8;
     transform: translate(8px, 13px) rotate(-45deg);
     transform-origin: left;
     transition: 150ms all linear;
@@ -197,7 +197,7 @@ input[type=checkbox]::after {
     position: absolute;
     width: 0;
     height: 3px;
-    background-color: rgb(29, 173, 0);
+    background-color: #0275d8;
     transform: translate(1px, 8px) rotate(45deg);
     transform-origin: left;
     transition: 150ms all linear;
@@ -214,15 +214,8 @@ input[type=checkbox]:checked::after {
     transition-delay: 0ms;
 }
 
-label {
+label#labelNeo {
     font-size: 20px;
     color: #fff;
     cursor: pointer;
-}
-
-.collapse#collapseFiltry{
-    margin-top: 1%;
-    background-color: #333333a7;
-    border: 1px solid #000000;
-    border-radius: 25px;
 }
