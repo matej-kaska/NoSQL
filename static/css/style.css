@@ -202,6 +202,10 @@ div.vis-network div.vis-navigation div.vis-button.vis-zoomOut {
 div.vis-network div.vis-navigation div.vis-button.vis-zoomExtends {
     bottom: 10px;
     background-image: url(./../resources/fullscreen.png);
+    box-shadow: none;
+}
+div.vis-network div.vis-navigation div.vis-button.vis-zoomExtends:hover {
+    box-shadow: 0 0 10px #0275d8;
 }
 
 /* CHECKBOXY*/
