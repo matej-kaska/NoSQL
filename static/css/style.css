@@ -37,7 +37,7 @@ body {
 .bdr {
     border-radius: 8px;
     overflow: hidden;
-    background-color: #332D2D;
+    background-color: #343a40;
     color: white;
 }
 
@@ -172,9 +172,37 @@ section {
     margin-right: 11%;
     background-color: #333333a7;
     border-radius: 25px;
-    border: 2px solid #332D2D;
+    border: 2px solid #343a40;
 }
 
+div.vis-network div.vis-navigation div.vis-button.vis-up {
+    display: none;
+}
+
+div.vis-network div.vis-navigation div.vis-button.vis-down {
+    display: none;
+}
+
+div.vis-network div.vis-navigation div.vis-button.vis-left {
+    display: none;
+}
+
+div.vis-network div.vis-navigation div.vis-button.vis-right {
+    display: none;
+}
+
+div.vis-network div.vis-navigation div.vis-button.vis-zoomIn {
+    display: none;
+}
+
+div.vis-network div.vis-navigation div.vis-button.vis-zoomOut {
+    display: none;
+}
+
+div.vis-network div.vis-navigation div.vis-button.vis-zoomExtends {
+    bottom: 10px;
+    background-image: url(./../resources/fullscreen.png);
+}
 
 /* CHECKBOXY*/
 input[type=checkbox] {
@@ -222,7 +250,7 @@ input[type=checkbox]:checked::after {
 }
 
 label#labelNeo {
-    font-size: 20px;
+    font-size: 19px;
     color: #fff;
     cursor: pointer;
 }

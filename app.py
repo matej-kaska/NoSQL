@@ -195,6 +195,7 @@ def getUniverzita():
 
 def getFakulta(id):
     start = time.time()
+    i = 0
     data = {}
     fakult = mariadb.session.query(Fakulta.nazev).filter(Fakulta.id == id).scalar()
     data["fakult"] = fakult
@@ -229,8 +230,8 @@ def getFakulta(id):
         if titulyDone != "":
             jmeno = titulyDone + " " + jmeno
         lidi.append(jmeno)
-    for i in range(len(lidi)):
         finalLidi.append([lidi[i], pozice[i]])
+        i = i + 1
     data["finalLidi"] = finalLidi
     end = time.time()
     print("Načtení z sql trvalo: " + str(end - start) + "s")

@@ -26,7 +26,7 @@
         <button class="btn" type="submit" name="btn" value="refresh" id="refresh" onclick="refreshContent()" style="padding: 0; background: transparent; border: none;"><img id="refresh-icon" class="refresh-start" src="https://icons.veryicon.com/png/o/miscellaneous/basic-monochrome-icon/refresh-149.png" width=25 height=25 title="Reset database" /></button> 
       </th>
     </thead>
-    <th>
+    <th  width="7%">
       <input
           type="text"
           class="form-control"
@@ -41,21 +41,21 @@
           name="createpra"
         />
     </th>
-    <th>
+    <th  width="20%">
       <input
           type="text"
           class="form-control"
           name="createtel"
         />
     </th>
-    <th>
+    <th  width="35%">
       <input
           type="text"
           class="form-control"
           name="createema"
         />
     </th>
-    <th>
+    <th width="15%">
       <button
       class="btn btn-success"
       type="submit"
@@ -76,12 +76,14 @@
     {{ printedKeys.append(key) or "" }}
     {% for key in item.keys() %}
     {% if key == "email" %}
-    <th width="30%" class="mongogridhead{{key}}">{{ key }}</th>
+    <th width="35%" class="mongogridhead{{key}}">{{ key }}</th>
+    {% elif key == "telefon" %}
+    <th width="20%" class="mongogridhead{{key}}">{{ key }}</th>
     {% else %}
     <th class="mongogridhead{{key}}">{{ key }}</th>
     {% endif %}
     {% endfor %}
-    <th width="20%"></th>
+    <th width="15%"></th>
     {% endif %}
   </thead>
 
@@ -148,7 +150,7 @@
 
   <table class="table table-hover table-bordered bdr">
     <tr>
-      <th scope="row">Počet unikátních emailů s @ujep.cz</th>
+      <th scope="row" width="30%">Počet unikátních emailů s @ujep.cz</th>
       {% for key, value in emailMapRed.items() %}
       {% if key == "ujep" %}
       <td>{{value}}</td>
