@@ -66,8 +66,8 @@
     Create
     </button>
     </th>
-    
   </table>
+
   <table class="table table-hover table-bordered bdr">
   {% set printedKeys = [] %}
   {% for item in mongo %}
@@ -75,9 +75,13 @@
     {% if key not in printedKeys %}
     {{ printedKeys.append(key) or "" }}
     {% for key in item.keys() %}
+    {% if key == "email" %}
+    <th width="30%" class="mongogridhead{{key}}">{{ key }}</th>
+    {% else %}
     <th class="mongogridhead{{key}}">{{ key }}</th>
+    {% endif %}
     {% endfor %}
-    <th></th>
+    <th width="20%"></th>
     {% endif %}
   </thead>
 

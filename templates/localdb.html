@@ -24,22 +24,26 @@
 <section class="section" id="Odeslat text" style="color: white; padding-left: 25%; padding-right: 25%">
   <form action="" method="post">
     <fieldset>
-      <div class="form-row">
-        <div class="col-md-2 mb-3">
-          <label for="forNazev">Název</label>
-          <input style="border: 2px solid #332D2D;" id="forNazev" type="text" class="form-control" name="nazev" placeholder="Zadej název" required/>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Název</span>
         </div>
-        <div class="col-md-2 mb-3">
-          <label for="forNadpis">Nadpis</label>
-          <input style="border: 2px solid #332D2D;" id="forNadpis" type="text" class="form-control" name="nadpis" placeholder="Zadej nadpis" required/>
+        <input id="forNazev" type="text" class="form-control" name="nazev" placeholder="Zadej název" required style="background-color: #333333; color: white"/>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Nadpis</span>
         </div>
-        <div class="col-md-8 mb-3">
-          <label for="textLocal">Text</label>
-          <input style="border: 2px solid #332D2D;" id="textLocal" type="text" class="form-control" name="text" placeholder="Zadej text" required/>
+        <input id="forNadpis" type="text" class="form-control" name="nadpis" placeholder="Zadej nadpis" required style="background-color: #333333; color: white"/>
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Text</span>
         </div>
+        <textarea id="textLocal" type="text" class="form-control" name="text" placeholder="Zadej text" required style="background-color: #333333; color: white"></textarea>
       </div>
       <div class="float-right">
-        <button class="btn btn-primary" type="submit" name="btn" value="send" style="justify-content: left">
+        <button class="btn btn-dark" type="submit" name="btn" value="send" style="justify-content: left; margin-top: 3px;">
           Potvrdit
         </button>
       </div>

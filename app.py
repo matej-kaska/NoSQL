@@ -100,7 +100,7 @@ mariadb.init_app(flaskAPR)
 mariadb.create_all()
 
 r = Redis(host=logins["server-ip"], port=6379)
-redisTimeout = 1
+redisTimeout = 60
 backupDeleter()
 
 clientMongo = MongoClient(logins["mongo"])
