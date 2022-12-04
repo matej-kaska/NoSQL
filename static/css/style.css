@@ -205,7 +205,11 @@ div.vis-network div.vis-navigation div.vis-button.vis-zoomExtends {
     box-shadow: none;
 }
 div.vis-network div.vis-navigation div.vis-button.vis-zoomExtends:hover {
-    box-shadow: 0 0 10px #0275d8;
+    box-shadow: 0 0 10px #024d8f;
+    -webkit-tap-highlight-color: red;
+}
+div.vis-network div.vis-navigation div.vis-button.vis-zoomExtends:active{
+    background-color: #024d8f;
 }
 
 /* CHECKBOXY*/
