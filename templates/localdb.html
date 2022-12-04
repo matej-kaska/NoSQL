@@ -5,15 +5,8 @@
   </header>
 </article>
 
-<section
-  class="section position-center"
-  id="Text"
-  style="padding-left: 15%; padding-right: 15%"
->
-  <table
-    class="table table-hover table-bordered bg-dark"
-    style= "color: white;"
-  >
+<section class="section position-center" id="Text" style="padding-left: 15%; padding-right: 15%">
+  <table class="table table-hover table-bordered bdr">
     <thead>
       <th>ID</th>
       <th>Soubor</th>
@@ -26,62 +19,30 @@
     {% endfor %}
   </table>
 </section>
-
 <br />
 <br />
-<section
-  class="section"
-  id="Odeslat text"
-  style="color: white; padding-left: 25%; padding-right: 25%"
->
+<section class="section" id="Odeslat text" style="color: white; padding-left: 25%; padding-right: 25%">
   <form action="" method="post">
     <fieldset>
-      <div class="input-group mb-0">
-        <span class="input-group-text" id="basic-addon1">Název</span>
-        <input
-          type="text"
-          class="form-control"
-          name="nazev"
-          placeholder="Zadej název"
-          required
-          
-        />
+      <div class="form-row">
+        <div class="col-md-2 mb-3">
+          <label for="forNazev">Název</label>
+          <input style="border: 2px solid #332D2D;" id="forNazev" type="text" class="form-control" name="nazev" placeholder="Zadej název" required/>
+        </div>
+        <div class="col-md-2 mb-3">
+          <label for="forNadpis">Nadpis</label>
+          <input style="border: 2px solid #332D2D;" id="forNadpis" type="text" class="form-control" name="nadpis" placeholder="Zadej nadpis" required/>
+        </div>
+        <div class="col-md-8 mb-3">
+          <label for="textLocal">Text</label>
+          <input style="border: 2px solid #332D2D;" id="textLocal" type="text" class="form-control" name="text" placeholder="Zadej text" required/>
+        </div>
       </div>
-      <br />
-
-      <div class="input-group mb-0" >
-        <span class="input-group-text" id="basic-addon1">Nadpis</span>
-        <input
-          type="text"
-          class="form-control"
-          name="nadpis"
-          placeholder="Zadej nadpis"
-          required
-        />
+      <div class="float-right">
+        <button class="btn btn-primary" type="submit" name="btn" value="send" style="justify-content: left">
+          Potvrdit
+        </button>
       </div>
-      <br />
-
-      <div class="input-group mb-0">
-        <span class="input-group-text" id="basic-addon1">Text</span>
-        <input
-          type="text"
-          class="form-control"
-          name="text"
-          placeholder="Zadej text"
-          required
-        />
-      </div>
-      <br />
-
-      <button
-        class="btn bg-dark"
-        type="submit"
-        name="btn"
-        value="send"
-        style="margin-bottom: 25px; color: white; margin-left: 91.5%"
-      >
-        Potvrdit
-      </button>
     </fieldset>
   </form>
 </section>

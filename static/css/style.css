@@ -33,6 +33,14 @@ body {
 }
 }
 
+/* TABULKY */
+.bdr {
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #332D2D;
+    color: white;
+}
+
 /* MEZIŘÁDKOVÉ ČÁRKY */
 .featurette-divider {
     background-color: #e73c7e;
@@ -112,7 +120,7 @@ section {
 }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
 .mongogrid_id {
@@ -165,7 +173,7 @@ section {
     margin-right: 11%;
     background-color: #333333a7;
     border-radius: 25px;
-    border: 2px solid #000000;
+    border: 2px solid #332D2D;
 }
 
 

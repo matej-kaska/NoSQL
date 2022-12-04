@@ -8,7 +8,7 @@
   <section class="section position-center" id="Text" style="padding-left: 15%; padding-right: 15%">
   {% set idstore = [] %}
   {% if mongo %}
-  <table class="table table-hover table-bordered bg-dark" style= "color: white;">
+  <table class="table table-hover table-bordered bdr">
     <thead>
       <th>
         _id
@@ -68,7 +68,7 @@
     </th>
     
   </table>
-  <table class="table table-hover table-bordered bg-dark" style= "color: white;">
+  <table class="table table-hover table-bordered bdr">
   {% set printedKeys = [] %}
   {% for item in mongo %}
   <thead>
@@ -142,7 +142,7 @@
   </table>
   {% endif %}
 
-  <table class="table table-hover table-bordered bg-dark" style= "color: white;">
+  <table class="table table-hover table-bordered bdr">
     <tr>
       <th scope="row">Počet unikátních emailů s @ujep.cz</th>
       {% for key, value in emailMapRed.items() %}
