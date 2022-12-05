@@ -165,7 +165,7 @@ section {
     animation-play-state: paused;
 }
     
-/* NeoViz */
+/* NEOVIZ */
 #viz {
     height: 800px;
     margin-left: 11%;
@@ -204,12 +204,14 @@ div.vis-network div.vis-navigation div.vis-button.vis-zoomExtends {
     background-image: url(./../resources/fullscreen.png);
     box-shadow: none;
 }
+
 div.vis-network div.vis-navigation div.vis-button.vis-zoomExtends:hover {
     box-shadow: 0 0 10px #024d8f;
-    -webkit-tap-highlight-color: red;
 }
+
 div.vis-network div.vis-navigation div.vis-button.vis-zoomExtends:active{
-    background-color: #024d8f;
+    box-shadow: 0 0 10px #023f76;
+    background-color: #023f76;
 }
 
 /* CHECKBOXY*/
