@@ -260,7 +260,7 @@ input[type=checkbox]:checked::after {
 }
 
 label#labelNeo {
-    font-size: 19px;
+    font-size: 16px;
     color: #fff;
     cursor: pointer;
 }
