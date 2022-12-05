@@ -58,7 +58,7 @@ def addToDB(nazev, nadpis, text):
     id = getLastID() + 1
     writeLineInFile(path + str(id) + "." + endOfFile, nazev +
                     separator + nadpis + separator + text)
-    db.append([id, nazev, nadpis, text])
+    db.append([str(id), nazev, nadpis, text])
 
 
 def backupDeleter():
